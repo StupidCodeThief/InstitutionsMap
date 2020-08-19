@@ -76,4 +76,5 @@ const validateLoginData = (email, password) => {
   return errors;
 };
 
+
 module.exports = { validateRegisterData, validateLoginData };

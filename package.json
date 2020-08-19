@@ -5,7 +5,9 @@
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "dev": "nodemon server.js"
+    "server": "nodemon server.js",
+    "client": "npm start --prefix client",
+    "dev": "concurrently \"npm run server\" \"npm run client\""
   },
   "repository": {
     "type": "git",
@@ -20,15 +22,19 @@
   "homepage": "https://github.com/StupidCodeThief/Institution-map-#readme",
   "dependencies": {
     "@hapi/joi": "^17.1.1",
+    "assert": "^2.0.0",
     "bcryptjs": "^2.4.3",
     "config": "^3.3.1",
     "cookie-parser": "^1.4.5",
     "express": "^4.17.1",
     "express-validator": "^6.5.0",
+    "google-auth-library": "^6.0.6",
     "gravatar": "^1.8.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.19",
     "mongoose": "^5.9.17",
+    "nodemailer": "^6.4.11",
+    "passport": "^0.4.1",
     "request": "^2.88.2"
   },
   "devDependencies": {
