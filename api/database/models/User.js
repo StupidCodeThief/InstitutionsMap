@@ -7,6 +7,7 @@ const UserSchema = new mongoose.Schema({
   },
   email: {
     type: String,
+    sparse: true,
     unique: true
   },
   password: {
@@ -21,10 +22,12 @@ const UserSchema = new mongoose.Schema({
   },
   googleId: {
     type: String,
+    sparse: true,
     unique: true
   },
   facebookId: {
     type: String,
+    sparse: true,
     unique: true
   }
 });

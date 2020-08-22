@@ -3,7 +3,7 @@ const express = require("express");
 const router = express.Router();
 
 const { getUser, login, register, authenticationGoogle, authenticationFacebook } = require("../controllers/auth");
-const { forgotPassword } = require("../controllers/forgotPassword");
+const { passwordRecovery, resetPassword } = require("../controllers/forgotPassword");
 const auth = require("../middlewares/auth");
 
 router.post("/login", login);
@@ -12,6 +12,7 @@ router.post("/register", register);
 router.post("/google", authenticationGoogle);
 router.post("/facebook", authenticationFacebook);
 
-router.post("/password", forgotPassword);
+router.post("/password", passwordRecovery);
+router.post("/password/reset", resetPassword);
 
 module.exports = router;

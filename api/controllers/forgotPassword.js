@@ -1,42 +1,66 @@
-"use strict";
 const nodemailer = require("nodemailer");
+const jwt = require("jsonwebtoken");
+const config = require("config");
+const isEmpty = require("lodash/isEmpty");
 
-const forgotPassword = async (req, res) => {
-  // async..await is not allowed in global scope, must use a wrapper
-  async function main() {
-    // Generate test SMTP service account from ethereal.email
-    // Only needed if you don't have a real mail account for testing
-    let testAccount = await nodemailer.createTestAccount();
+const { BadRequest, NotFound } = require("../utils/errors");
+const { validatePassword } = require("../validation/auth");
+const { createToken, sendRecoverPasswordLink } = require("../utils/passwordRecovery/passwordRecovery");
+const User = require("../database/models/User");
 
-    // create reusable transporter object using the default SMTP transport
-    let transporter = nodemailer.createTransport({
-      host: "smtp.ethereal.email",
-      port: 587,
-      secure: false, // true for 465, false for other ports
-      auth: {
-        user: testAccount.user, // generated ethereal user
-        pass: testAccount.pass // generated ethereal password
-      }
-    });
+const passwordRecovery = async (req, res, next) => {
+  try {
+    const { email } = req.body;
+    const user = await User.findOne({ email: email, googleId: undefined, facebookId: undefined }).select("-password");
 
-    // send mail with defined transport object
-    let info = await transporter.sendMail({
-      from: '"Fred Foo 👻" <foo@example.com>', // sender address
-      to: "denis.vasiliuk@gmail.com", // list of receivers
-      subject: "Hello ✔", // Subject line
-      text: "Hello world?", // plain text body
-      html: "<b>Hello world?</b>" // html body
-    });
+    if (!user) {
+      throw new NotFound("User not exists");
+    }
 
-    console.log("Message sent: %s", info.messageId);
-    // Message sent: <b658f8ca-6296-ccf4-8306-87d57a0b4321@example.com>
+    const token = createToken({ user: { id: user.id } }, config.get("jwtSecretExpiresIn"));
+    const setResetUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}/reset?token=${token}`;
 
-    // Preview only available when sending through an Ethereal account
-    console.log("Preview URL: %s", nodemailer.getTestMessageUrl(info));
-    // Preview URL: https://ethereal.email/message/WaQKMgKddxQDoou...
+    sendRecoverPasswordLink(email, setResetUrl);
+
+    res.json({ msg: "Recover link was sent" });
+  } catch (error) {
+    console.error(error.message);
+    next(error);
   }
-
-  main().catch(console.error);
 };
 
-module.exports = { forgotPassword };
+const resetPassword = async (req, res, next) => {
+  const { password } = req.body;
+  const { token } = req.query;
+
+  try {
+    const errors = validatePassword(password);
+
+    if (!isEmpty(errors)) {
+      throw new BadRequest(errors);
+    }
+
+    const userId = jwt.verify(token, config.get("jwtSecret"));
+
+    const user = await User.findOne({ id: userId, googleId: undefined, facebookId: undefined });
+
+    if (!user) {
+      throw new BadRequest("User has no password, please add another login type");
+    }
+
+    if (user.password === password) throw new BadRequest("Your new password can not be similar to current password");
+    user.password = password;
+
+    await user.save();
+
+    res.json({ msg: "Password successfully changed", pass: password });
+  } catch (error) {
+    console.error(error.message);
+    next(error);
+  }
+};
+
+module.exports = {
+  passwordRecovery,
+  resetPassword,
+};

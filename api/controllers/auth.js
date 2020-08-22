@@ -1,10 +1,9 @@
 const isEmpty = require("lodash/isEmpty");
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const config = require("config");
 const { OAuth2Client } = require("google-auth-library");
 
-const { BadRequest } = require("../utils/errors");
+const { BadRequest, NotFound } = require("../utils/errors");
 const { validateRegisterData, validateLoginData } = require("../validation/auth");
 const { setCookie } = require("../utils/setCookie/setCookie");
 const User = require("../database/models/User");
@@ -32,7 +31,7 @@ const login = async (req, res, next) => {
     let user = await User.findOne({ email });
 
     if (!user) {
-      throw new BadRequest({ errors: [{ msg: "Invalid credentials" }] }, "Authentication Error");
+      throw new NotFound("User not exist");
     }
 
     const isMatch = await bcrypt.compare(password, user.password);
@@ -54,16 +53,16 @@ const login = async (req, res, next) => {
   }
 };
 
-const register = async (req, res) => {
-  const { userName, email, password, avatar } = req.body;
-
-  const errors = validateRegisterData(userName, email, password);
-
-  if (!isEmpty(errors)) {
-    throw new BadRequest(errors);
-  }
-
+const register = async (req, res, next) => {
   try {
+    const { userName, email, password, avatar } = req.body;
+
+    const errors = validateRegisterData(userName, email, password);
+
+    if (!isEmpty(errors)) {
+      throw new BadRequest(errors);
+    }
+
     let user = await User.findOne({ email });
 
     if (user) {
@@ -95,7 +94,7 @@ const register = async (req, res) => {
   }
 };
 
-const authenticationGoogle = async (req, res) => {
+const authenticationGoogle = async (req, res, next) => {
   const { token } = req.body;
   const CLIENT_ID = config.get("OAuthId");
   const client = new OAuth2Client(CLIENT_ID);
@@ -108,23 +107,21 @@ const authenticationGoogle = async (req, res) => {
 
     let payload = ticket.getPayload();
 
-    const { name: userName, email, picture: avatar, ID: googleId } = payload;
+    const { name: userName, email, picture: avatar, sub: googleId } = payload;
 
-    let user = await User.findOne({ googleId });
+    let user = await User.findOne({ googleId: googleId });
 
-    if (user) {
-      payload = {
-        user: {
-          id: user.id
-        }
-      };
+    if (!user) {
+      if (email) {
+        user = await User.findOneAndUpdate({ email: email }, { googleId: googleId });
+      }
 
-      setCookie(payload, res);
+      if (!user) {
+        user = new User({ userName, email, avatar, googleId });
+      }
+
+      await user.save();
     }
-
-    user = new User({ userName, email, avatar, googleId });
-
-    await user.save();
 
     payload = {
       user: {
@@ -139,7 +136,7 @@ const authenticationGoogle = async (req, res) => {
   }
 };
 
-const authenticationFacebook = async (req, res) => {
+const authenticationFacebook = async (req, res, next) => {
   const {
     name: userName,
     email,
@@ -152,19 +149,17 @@ const authenticationFacebook = async (req, res) => {
   try {
     let user = await User.findOne({ facebookId });
 
-    if (user) {
-      const payload = {
-        user: {
-          id: user.id
-        }
-      };
+    if (!user) {
+      if (email) {
+        user = await User.findOneAndUpdate({ email: email }, { facebookId: facebookId });
+      }
 
-      setCookie(payload, res);
+      if (!user) {
+        user = new User({ userName, email, avatar, facebookId });
+      }
+
+      await user.save();
     }
-
-    user = new User({ userName, email, avatar, facebookId });
-
-    await user.save();
 
     const payload = {
       user: {
