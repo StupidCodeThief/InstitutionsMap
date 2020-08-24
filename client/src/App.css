@@ -1,20 +1,9 @@
-.page-header {
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  right: 15px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 5px;
-  background-color: rgb(235, 237, 240);
+html {
+  overflow: hidden;
 }
 
-.logo {
-  width: 3em;
-  height: 3em;
-  background-image: url("../src/img/PNG/logo.png");
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.container {
+  margin-top: 100px;
+  margin-left: 15px;
+  margin-right: 15px;
 }

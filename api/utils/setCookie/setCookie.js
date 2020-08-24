@@ -10,5 +10,3 @@ const setCookie = (payload, res) => {
 };
 
 module.exports = { setCookie };
-
-

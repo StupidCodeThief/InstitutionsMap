@@ -22,6 +22,7 @@ const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
 
+    console.log(email, password);
     const errors = validateLoginData(email, password);
 
     if (!isEmpty(errors)) {
@@ -174,4 +175,78 @@ const authenticationFacebook = async (req, res, next) => {
   }
 };
 
-module.exports = { getUser, login, register, authenticationGoogle, authenticationFacebook };
+const addFacebookToAccount = async (req, res, next) => {
+  try {
+    const { id: facebookId } = req.body;
+
+    const user = await User.findOneAndUpdate({ _id: req.user.id }, { facebookId: facebookId });
+
+    await user.save();
+
+    res.json({ msg: "Account updated" });
+  } catch (error) {
+    console.error(error.message);
+    next(error);
+  }
+};
+
+const addGoogleToAccount = async (req, res, next) => {
+  try {
+    const { token } = req.body;
+    const CLIENT_ID = config.get("OAuthId");
+    const client = new OAuth2Client(CLIENT_ID);
+
+    const ticket = await client.verifyIdToken({
+      idToken: token,
+      audience: CLIENT_ID
+    });
+
+    let payload = ticket.getPayload();
+
+    const { sub: googleId } = payload;
+
+    const user = await User.findOneAndUpdate({ _id: req.user.id }, { googleId: googleId });
+
+    await user.save();
+
+    res.json({ msg: "Account updated" });
+  } catch (error) {
+    console.error(error.message);
+    next(error);
+  }
+};
+
+const addEmailToAccount = async (req, res, next) => {
+  try {
+    const { email, password } = req.body;
+
+    const errors = validateLoginData(email, password);
+
+    if (!isEmpty(errors)) {
+      throw new BadRequest(errors);
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    password = await bcrypt.hash(password, salt);
+
+    const user = await User.findOneAndUpdate({ _id: req.user.id }, { email: email, password: password });
+
+    await user.save();
+
+    res.json({ msg: "Account updated" });
+  } catch (error) {
+    console.error(error.message);
+    next(error);
+  }
+};
+
+module.exports = {
+  getUser,
+  login,
+  register,
+  authenticationGoogle,
+  authenticationFacebook,
+  addFacebookToAccount,
+  addGoogleToAccount,
+  addEmailToAccount
+};

@@ -1,18 +1,48 @@
 import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import PropTypes from "prop-types";
 
-import Google from "../../auth/Google";
-import Facebook from "../../auth/Facebook";
+import { Button } from "antd";
 
-function Navbar() {
+import Logout from "../../auth/Logout/Logout";
+
+import "./navbar.css";
+
+function Navbar({ isAuthenticated }) {
   return (
     <header className="page-header">
-      <div className={"logo"}></div>
-      <div>
-      <Google />
-      <Facebook />
-      </div>
+      <Link to="/" className={"logo"}></Link>
+      <nav className="navigation-container">
+        <ul className="navigation-list">
+          {isAuthenticated ? (
+            <Logout />
+          ) : (
+            <>
+              <li>
+                <Button className={"ant-btn ant-btn-primary"}>
+                  <Link to="/register">Register</Link>
+                </Button>
+              </li>
+              <li>
+                <Button className={"ant-btn ant-btn-primary"}>
+                  <Link to="/login">Login</Link>
+                </Button>
+              </li>
+            </>
+          )}
+        </ul>
+      </nav>
     </header>
   );
 }
 
-export default Navbar;
+Navbar.propTypes = {
+  isAuthenticated: PropTypes.bool.isRequired
+};
+
+const mapStateToProps = (state) => ({
+  isAuthenticated: state.auth.isAuthenticated
+});
+
+export default connect(mapStateToProps, null)(Navbar);
