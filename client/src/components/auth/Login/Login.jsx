@@ -13,10 +13,16 @@ function Login({ isAuthenticated }) {
   }
 
   return (
-    <div>
-      <LoginForm />
-      <Google /> <Facebook />
-    </div>
+    <section className="container">
+      <h1 className="large text-primary">Sign In</h1>
+      <p className="lead">
+        <i className="fas fa-user"></i> Sign into Your Account
+      </p>
+      <div>
+        <LoginForm />
+        <Google /> <Facebook />
+      </div>
+    </section>
   );
 }
 

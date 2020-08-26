@@ -7,8 +7,9 @@ function errorHandler(err, req, res, next) {
   if(err.data) {
     error.data = err.data;
   }
+  console.log(error)
 
-  return res.status(error.statusCode).json(error);
+  return res.status(error.statusCode).send(error);
 }
 
 module.exports = errorHandler;

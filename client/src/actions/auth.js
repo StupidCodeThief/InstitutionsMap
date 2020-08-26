@@ -26,31 +26,28 @@ export const loadUser = () => async (dispatch) => {
   }
 };
 
-export const register = ({ name, email, password }) => async (dispatch) => {
+export const register = (userCredential) => async (dispatch) => {
   const config = {
     headers: {
       "Content-Type": "application/json"
     }
   };
 
-  const body = JSON.stringify({ name, email, password });
+  const body = JSON.stringify(userCredential);
 
   try {
-    const res = await axios.post("/api/auth/register", body, config);
+    await axios.post("/api/auth/register", body, config);
 
     dispatch({
-      type: REGISTER_SUCCESS,
-      payload: res.data
+      type: REGISTER_SUCCESS
     });
 
     dispatch(loadUser());
   } catch (error) {
-    const errors = error.response.data.errors;
+    const errors = error.response.data;
 
     if (errors) {
-      errors.forEach((error) => {
-        dispatch(setAlert(error.msg, "danger"));
-      });
+      dispatch(setAlert(errors.message, "error"));
     }
 
     dispatch({
@@ -83,27 +80,66 @@ export const login = (userCredential, type) => async (dispatch) => {
   const body = JSON.stringify(userCredential);
 
   try {
-    const res = await axios.post(url, body, config);
+    await axios.post(url, body, config);
 
     dispatch({
       type: LOGIN_SUCCESS
     });
 
-    console.log(res.data);
     dispatch(loadUser());
   } catch (error) {
-    console.log(error);
-    const errors = error.response.data.errors;
+    const errors = error.response.data;
 
     if (errors) {
-      errors.forEach((error) => {
-        dispatch(setAlert(error.msg, "danger"));
-      });
+      dispatch(setAlert(errors.message, "error"));
     }
 
     dispatch({
       type: LOGIN_FAILURE
     });
+  }
+};
+
+export const getRecoveryPasswordLink = (email) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify(email);
+
+  try {
+    await axios.post("/api/auth/password", body, config);
+  } catch (error) {
+    const errors = error.response.data;
+
+    if (errors) {
+      dispatch(setAlert(errors.message, "error"));
+    }
+  }
+};
+
+export const resetPassword = (password, token) => async (dispatch) => {
+  const config = {
+    headers: {
+      "Content-Type": "application/json"
+    }
+  };
+
+  const body = JSON.stringify(password);
+
+  try {
+   await axios.post(`/api/auth//password/reset?token=${token}`, body, config);
+
+    dispatch(setAlert("Success", "success"));
+  } catch (error) {
+    console.log(error)
+    const errors = error.response.data;
+
+    if (errors) {
+      dispatch(setAlert(errors.data || errors.message, "error"));
+    }
   }
 };
 

@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 
@@ -14,6 +14,8 @@ import Login from "./components/auth/Login/Login";
 import Register from "./components/auth/Register/Register";
 import Dashboard from "./components/Dashboard/Dashboard";
 import PrivateRoute from "./components/routing/PrivateRoute";
+import ForgotPassword from "./components/auth/ForgotPassword/ForgotPassword";
+import ResetPassword from "./components/auth/ResetPassword/ResetPassword";
 
 import { loadUser } from "./actions/auth";
 
@@ -32,6 +34,8 @@ function App() {
             <Route exact path="/" component={Landing} />
             <Route exact path="/login" component={Login} />
             <Route exact path="/register" component={Register} />
+            <Route exact path="/forgot-password" component={ForgotPassword} />
+            <Route exact path="/password/reset/" component={ResetPassword} />
             <PrivateRoute exact path="/dashboard" component={Dashboard} />
           </Switch>
         </section>

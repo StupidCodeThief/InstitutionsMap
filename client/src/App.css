@@ -2,8 +2,11 @@ html {
   overflow: hidden;
 }
 
+#root {
+  padding-top: 100px;
+}
+
 .container {
-  margin-top: 100px;
   margin-left: 15px;
   margin-right: 15px;
 }

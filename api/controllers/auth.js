@@ -67,7 +67,7 @@ const register = async (req, res, next) => {
     let user = await User.findOne({ email });
 
     if (user) {
-      throw new BadRequest({ errors: [{ msg: "User already exists" }] }, "Registration Error");
+      throw new BadRequest({ errors: [{ msg: "User already exists" }] }, "User already exists");
     }
 
     user = new User({

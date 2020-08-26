@@ -8,7 +8,7 @@ const passwordSchema = Joi.string()
   .required()
   .min(8)
   .max(32)
-  .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/);
+  .regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/);
 
 const validateRegisterData = (userName, email, password) => {
   const errors = {};
@@ -27,7 +27,7 @@ const validateRegisterData = (userName, email, password) => {
 
   if (passwordValidate.error) {
     if (passwordValidate.error.details[0].context.regex) {
-      errors.password = "Password must contain  at least one uppercase letter, one lowercase letter, one number and one special character";
+      errors.password = "Password must include at least one upper case letter, one lower case letter, and one numeric digit";
     } else {
       errors.password = passwordValidate.error.details[0].message.replace('"value"', "Password");
     }
@@ -48,7 +48,7 @@ const validateLoginData = (email, password) => {
 
   if (passwordValidate.error) {
     if (passwordValidate.error.details[0].context.regex) {
-      errors.password = "Password must contain  at least one uppercase letter, one lowercase letter, one number and one special character";
+      errors.password = "Password must include at least one upper case letter, one lower case letter, and one numeric digit";
     } else {
       errors.password = passwordValidate.error.details[0].message.replace('"value"', "Password");
     }
@@ -64,7 +64,7 @@ const validatePassword = (password) => {
 
   if (passwordValidate.error) {
     if (passwordValidate.error.details[0].context.regex) {
-      errors.password = "Password must contain  at least one uppercase letter, one lowercase letter, one number and one special character";
+      errors.password = "Password must include at least one upper case letter, one lower case letter, and one numeric digit";
     } else {
       errors.password = passwordValidate.error.details[0].message.replace('"value"', "Password");
     }

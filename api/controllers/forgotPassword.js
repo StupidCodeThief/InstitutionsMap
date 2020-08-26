@@ -1,4 +1,4 @@
-const nodemailer = require("nodemailer");
+const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const config = require("config");
 const isEmpty = require("lodash/isEmpty");
@@ -11,14 +11,19 @@ const User = require("../database/models/User");
 const passwordRecovery = async (req, res, next) => {
   try {
     const { email } = req.body;
-    const user = await User.findOne({ email: email, googleId: undefined, facebookId: undefined }).select("-password");
+    console.log(email);
+    const user = await User.findOne({ email: email });
 
     if (!user) {
       throw new NotFound("User not exists");
     }
 
+    if (!user.password) {
+      throw new BadRequest("User has no password, please add email login type");
+    }
+
     const token = createToken({ user: { id: user.id } }, config.get("jwtSecretExpiresIn"));
-    const setResetUrl = `${req.protocol}://${req.get("host")}${req.originalUrl}/reset?token=${token}`;
+    const setResetUrl = `${req.protocol}://localhost:3000/password/reset?token=${token}`;
 
     sendRecoverPasswordLink(email, setResetUrl);
 
@@ -30,7 +35,7 @@ const passwordRecovery = async (req, res, next) => {
 };
 
 const resetPassword = async (req, res, next) => {
-  const { password } = req.body;
+  let { password } = req.body;
   const { token } = req.query;
 
   try {
@@ -40,15 +45,22 @@ const resetPassword = async (req, res, next) => {
       throw new BadRequest(errors);
     }
 
-    const userId = jwt.verify(token, config.get("jwtSecret"));
+    const userData = jwt.verify(token, config.get("jwtSecret"));
+    const userId = userData.user.id;
 
-    const user = await User.findOne({ id: userId, googleId: undefined, facebookId: undefined });
+    const user = await User.findOne({ _id: userId });
 
     if (!user) {
-      throw new BadRequest("User has no password, please add another login type");
+      throw new NotFound("User not exists");
     }
 
-    if (user.password === password) throw new BadRequest("Your new password can not be similar to current password");
+    const isMatch = await bcrypt.compare(password, user.password);
+
+    if (isMatch) throw new BadRequest("Your new password can not be similar to current password");
+    
+    const salt = await bcrypt.genSalt(10);
+    password = await bcrypt.hash(password, salt);
+    
     user.password = password;
 
     await user.save();
@@ -62,5 +74,5 @@ const resetPassword = async (req, res, next) => {
 
 module.exports = {
   passwordRecovery,
-  resetPassword,
+  resetPassword
 };

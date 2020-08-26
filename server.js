@@ -11,7 +11,7 @@ const app = express();
 
 app.use(express.json({ extended: false }));
 app.use(cookieParser());
-app.use(cors())
+app.use(cors());
 
 connectDb();
 
