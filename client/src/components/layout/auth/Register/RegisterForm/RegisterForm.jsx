@@ -1,26 +1,28 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 
 import { Form, Input, Tooltip, Button } from "antd";
 import { QuestionCircleOutlined } from "@ant-design/icons";
 
 import { register } from "../../../../../actions/auth";
+import { REGISTER_SUCCESS } from "../../../../../actions/types";
 
 import { formItemLayout, tailFormItemLayout } from "./RegisterForm.service";
 
-function RegisterForm({ register }) {
+function RegisterForm() {
   const [form] = Form.useForm();
 
+  const dispatch = useDispatch();
+
   const onFinish = (values) => {
-    register(values);
+    dispatch({ type: REGISTER_SUCCESS, payload: register(values) });
   };
 
   return (
     <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError>
       <Form.Item
         name="email"
-        label="E-mail"
+        // label="E-mail"
         rules={[
           {
             type: "email",
@@ -32,12 +34,12 @@ function RegisterForm({ register }) {
           }
         ]}
       >
-        <Input />
+        <Input placeholder="E-mail" />
       </Form.Item>
 
       <Form.Item
         name="password"
-        label="Password"
+        // label="Password"
         rules={[
           {
             required: true,
@@ -55,12 +57,12 @@ function RegisterForm({ register }) {
         ]}
         hasFeedback
       >
-        <Input.Password />
+        <Input.Password placeholder="Password" />
       </Form.Item>
 
       <Form.Item
         name="confirm"
-        label="Confirm Password"
+        // label="Confirm Password"
         dependencies={["password"]}
         hasFeedback
         rules={[
@@ -79,19 +81,19 @@ function RegisterForm({ register }) {
           })
         ]}
       >
-        <Input.Password />
+        <Input.Password placeholder="Confirm Password" />
       </Form.Item>
 
       <Form.Item
         name="userName"
-        label={
-          <span>
-            Nickname&nbsp;
-            <Tooltip title="What do you want others to call you?">
-              <QuestionCircleOutlined />
-            </Tooltip>
-          </span>
-        }
+        // label={
+        //   <span>
+        //     Nickname&nbsp;
+        //     <Tooltip title="What do you want others to call you?">
+        //       <QuestionCircleOutlined />
+        //     </Tooltip>
+        //   </span>
+        // }
         rules={[
           {
             required: true,
@@ -100,11 +102,14 @@ function RegisterForm({ register }) {
           }
         ]}
       >
-        <Input />
+        <Input placeholder="Nickname" />
       </Form.Item>
 
-      <Form.Item name="avatar" label="Avatar URL">
-        <Input />
+      <Form.Item
+        name="avatar"
+        // label="Avatar URL"
+      >
+        <Input placeholder="Avatar" />
       </Form.Item>
 
       <Form.Item {...tailFormItemLayout}>
@@ -116,12 +121,4 @@ function RegisterForm({ register }) {
   );
 }
 
-RegisterForm.propTypes = {
-  register: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = {
-  register
-};
-
-export default connect(null, mapDispatchToProps)(RegisterForm);
+export default RegisterForm;

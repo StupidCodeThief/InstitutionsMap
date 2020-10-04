@@ -21,3 +21,6 @@ export const PLACE_DATA_ERROR = "PLACE_DATA_ERROR";
 export const PLACES_LOADED = "PLACES_LOADED";
 export const PLACES_CLEAR = "PLACES_CLEAR";
 export const PLACES_ERROR = "PLACES_ERROR";
+
+export const UI_THEME_CHANGED = "UI_THEME_CHANGED";
+

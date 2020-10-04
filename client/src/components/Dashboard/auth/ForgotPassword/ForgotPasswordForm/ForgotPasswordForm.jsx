@@ -1,16 +1,18 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 
 import { Form, Input, Button } from "antd";
 
 import { getRecoveryPasswordLink } from "../../../../../actions/auth";
+import { ACCOUNT_UPDATED } from "../../../../../actions/types";
 
-function ForgotPasswordForm({ getRecoveryPasswordLink }) {
+function ForgotPasswordForm() {
+  const dispatch = useDispatch();
+
   const onFinish = (values) => {
     console.log("Success:", values);
 
-    getRecoveryPasswordLink(values);
+    dispatch({ type: ACCOUNT_UPDATED, payload: getRecoveryPasswordLink(values) });
   };
 
   const onFinishFailed = (errorInfo) => {
@@ -27,7 +29,6 @@ function ForgotPasswordForm({ getRecoveryPasswordLink }) {
       onFinishFailed={onFinishFailed}
     >
       <Form.Item
-        label="Email"
         name="email"
         rules={[
           {
@@ -40,7 +41,7 @@ function ForgotPasswordForm({ getRecoveryPasswordLink }) {
           }
         ]}
       >
-        <Input />
+        <Input placeholder="Email" />
       </Form.Item>
 
       <Form.Item>
@@ -52,12 +53,4 @@ function ForgotPasswordForm({ getRecoveryPasswordLink }) {
   );
 }
 
-ForgotPasswordForm.propTypes = {
-  getRecoveryPasswordLink: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = {
-  getRecoveryPasswordLink
-};
-
-export default connect(null, mapDispatchToProps)(ForgotPasswordForm);
+export default ForgotPasswordForm;

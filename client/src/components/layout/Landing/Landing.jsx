@@ -1,24 +1,17 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useSelector } from "react-redux";
 
 import "./landing.css";
 
-function Landing({ isAuthenticated }) {
+function Landing() {
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
 
-  return <>Landing page</>;
+  return <></>;
 }
 
-Landing.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, null)(Landing);
+export default Landing;

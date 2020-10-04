@@ -9,7 +9,9 @@ export const Container = styled.section`
   left: 15px;
   right: 15px;
   bottom: 35px;
-  padding: 5px;
+  padding-top: 5%;
+  padding-left: 25%;
+  padding-right: 25%;
   z-index: 2;
 `;
 
@@ -54,5 +56,4 @@ export const Div = styled.div`
 
 export const Span = styled.span`
   display: flex;
-  justify-content: space-around;
 `;

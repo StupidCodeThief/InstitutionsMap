@@ -69,7 +69,6 @@ function Map() {
     setMarkers([]);
 
     service.nearbySearch(request, (results, status, pagination) => {
-      // console.log(status);
 
       if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
         const request = {
