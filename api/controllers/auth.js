@@ -5,12 +5,18 @@ const { OAuth2Client } = require("google-auth-library");
 
 const { BadRequest, NotFound } = require("../utils/errors");
 const { validateRegisterData, validateLoginData } = require("../validation/auth");
-const { setCookie } = require("../utils/setCookie/setCookie");
+const { setCookie, clearCookie } = require("../utils/setCookie/setCookie");
 const User = require("../database/models/User");
+const { getHashedPassword } = require("../utils/bcrypt/hashedPassword");
 
 const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.user.id).select("-password");
+
+    if (!user) {
+      throw new BadRequest({ errors: [{ msg: "User not found" }] }, "User not found");
+    }
+
     res.json(user);
   } catch (error) {
     console.error(error.message);
@@ -54,6 +60,15 @@ const login = async (req, res, next) => {
   }
 };
 
+const logout = async (req, res, next) => {
+  try {
+    clearCookie(res);
+  } catch (error) {
+    console.error(error.message);
+    next(error);
+  }
+};
+
 const register = async (req, res, next) => {
   try {
     const { userName, email, password, avatar } = req.body;
@@ -77,8 +92,7 @@ const register = async (req, res, next) => {
       password
     });
 
-    const salt = await bcrypt.genSalt(10);
-    user.password = await bcrypt.hash(password, salt);
+    user.password = getHashedPassword(password);
 
     await user.save();
 
@@ -177,7 +191,7 @@ const authenticationFacebook = async (req, res, next) => {
 
 const addFacebookToAccount = async (req, res, next) => {
   try {
-    const { id: facebookId } = req.body;
+    const { userID: facebookId } = req.body;
 
     const user = await User.findOneAndUpdate({ _id: req.user.id }, { facebookId: facebookId });
 
@@ -226,8 +240,7 @@ const addEmailToAccount = async (req, res, next) => {
       throw new BadRequest(errors);
     }
 
-    const salt = await bcrypt.genSalt(10);
-    password = await bcrypt.hash(password, salt);
+    password = getHashedPassword(password)
 
     const user = await User.findOneAndUpdate({ _id: req.user.id }, { email: email, password: password });
 
@@ -248,5 +261,6 @@ module.exports = {
   authenticationFacebook,
   addFacebookToAccount,
   addGoogleToAccount,
-  addEmailToAccount
+  addEmailToAccount,
+  logout
 };

@@ -29,6 +29,9 @@ const UserSchema = new mongoose.Schema({
     type: String,
     sparse: true,
     unique: true
+  },
+  visitedPlaces: {
+    type: [String]
   }
 });
 

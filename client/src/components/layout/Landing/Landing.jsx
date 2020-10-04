@@ -10,7 +10,7 @@ function Landing({ isAuthenticated }) {
     return <Redirect to="/dashboard" />;
   }
 
-  return <section className="main-page">Public route / landing page</section>;
+  return <>Landing page</>;
 }
 
 Landing.propTypes = {

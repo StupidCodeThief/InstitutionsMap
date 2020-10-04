@@ -1,9 +1,11 @@
 const jwt = require("jsonwebtoken");
 const config = require("config");
 
+const { BadRequest } = require("../utils/errors");
+
 module.exports = (req, res, next) => {
   if (!req.cookies?.token) {
-    return res.status(401).json({ msg: "No token, authorization denied" });
+    throw new BadRequest("No token, authorization denied");
   }
 
   const token = req.cookies.token;
@@ -12,9 +14,10 @@ module.exports = (req, res, next) => {
     const decoded = jwt.verify(token, config.get("jwtSecret"));
 
     req.user = decoded.user;
-    
+
     next();
   } catch (error) {
-    return res.status(401).json({ msg: "Token is not wailed" });
+    console.error(error.message);
+    next(error);
   }
 };

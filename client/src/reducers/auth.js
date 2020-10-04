@@ -2,16 +2,19 @@ import {
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   USER_LOADED,
+  USERS_LOADED,
   AUTH_ERROR,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  LOG_OUT
+  LOG_OUT,
+  ACCOUNT_UPDATED
 } from "../actions/types";
 
 const initialState = {
   isAuthenticated: false,
   loading: true,
-  user: null
+  user: null,
+  users: []
 };
 
 export default function (state = initialState, action) {
@@ -24,8 +27,15 @@ export default function (state = initialState, action) {
         loading: false,
         user: payload
       };
+    case USERS_LOADED:
+      return {
+        ...state,
+        loading: false,
+        users: payload
+      };
     case REGISTER_SUCCESS:
     case LOGIN_SUCCESS:
+    case ACCOUNT_UPDATED:
       return {
         ...state,
         ...payload,
