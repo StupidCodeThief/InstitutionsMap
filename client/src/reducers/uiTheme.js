@@ -1,14 +1,14 @@
 import { UI_THEME_CHANGED } from "../actions/types";
 
 const initialState = {
-  darckTheme: localStorage.getItem("uiTheme")
+  darckTheme: false
 };
 
 export default function (state = initialState, action) {
-  const { payload, type } = action;
+  const { type } = action;
   switch (type) {
     case UI_THEME_CHANGED:
-      localStorage.setItem("uiTheme", !state.darckTheme);
+      localStorage.setItem("darckTheme", !state.darckTheme);
       return {
         ...state,
         darckTheme: !state.darckTheme

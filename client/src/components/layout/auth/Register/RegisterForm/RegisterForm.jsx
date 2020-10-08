@@ -1,13 +1,9 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 
-import { Form, Input, Tooltip, Button } from "antd";
-import { QuestionCircleOutlined } from "@ant-design/icons";
+import { Form, Input, Button } from "antd";
 
 import { register } from "../../../../../actions/auth";
-import { REGISTER_SUCCESS } from "../../../../../actions/types";
-
-import { formItemLayout, tailFormItemLayout } from "./RegisterForm.service";
 
 function RegisterForm() {
   const [form] = Form.useForm();
@@ -15,11 +11,11 @@ function RegisterForm() {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    dispatch({ type: REGISTER_SUCCESS, payload: register(values) });
+    dispatch(register(values));
   };
 
   return (
-    <Form {...formItemLayout} form={form} name="register" onFinish={onFinish} scrollToFirstError>
+    <Form form={form} name="register" onFinish={onFinish} scrollToFirstError>
       <Form.Item
         name="email"
         // label="E-mail"
@@ -112,7 +108,7 @@ function RegisterForm() {
         <Input placeholder="Avatar" />
       </Form.Item>
 
-      <Form.Item {...tailFormItemLayout}>
+      <Form.Item>
         <Button type="primary" htmlType="submit">
           Register
         </Button>

@@ -1,6 +1,6 @@
 import React from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+
+import { useSelector } from "react-redux";
 
 import AddEmail from "./AddEmail/AddEmail";
 import AddGoogle from "./AddGoogle/AddGoogle";
@@ -8,9 +8,14 @@ import AddFacebook from "./AddFacebook/AddFacebook";
 
 import { Container } from "././../../../app/App.styles";
 
-function AddLoginType({ user }) {
+function AddLoginType() {
+  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
+  const user = useSelector((state) => state.auth.user);
+
   return (
-    <Container backgroundColor={"white"}>
+    <Container
+      backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}
+    >
       <AddEmail />
       {user.googleId ? null : <AddGoogle />}
       {user.facebookId ? null : <AddFacebook />}
@@ -18,12 +23,4 @@ function AddLoginType({ user }) {
   );
 }
 
-AddLoginType.propTypes = {
-  user: PropTypes.object.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  user: state.auth.user
-});
-
-export default connect(mapStateToProps, null)(AddLoginType);
+export default AddLoginType;

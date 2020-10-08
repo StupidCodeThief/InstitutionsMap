@@ -1,4 +1,5 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
 import { Tabs, Button } from "antd";
@@ -11,15 +12,22 @@ import UserPlaces from "./UserPlaces/UserPlaces";
 const { TabPane } = Tabs;
 
 function UserProfile() {
+  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
+  const user = useSelector((state) => state.auth.user);
+
   function callback(key) {
     console.log(key);
   }
 
   return (
-    <Container backgroundColor={"white"}>
-      <Tabs defaultActiveKey="1" onChange={callback}>
+    <Container backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}>
+      <Tabs
+        defaultActiveKey="1"
+        onChange={callback}
+        style={{ color: isThemeDArk ? "#fff" : "#27292D", overflow: "scroll" }}
+      >
         <TabPane tab="User info" key="1">
-          <UserInfo />
+          <UserInfo user={user} />
         </TabPane>
         <TabPane tab="User places" key="2">
           <UserPlaces />

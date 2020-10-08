@@ -1,7 +1,6 @@
 import React from "react";
-import { connect, useSelector, useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
-import PropTypes from "prop-types";
 
 import { Button, Switch } from "antd";
 
@@ -13,9 +12,10 @@ import { Header, Ul, Li } from "../../app/App.styles";
 
 import "./navbar.css";
 
-function Navbar({ isAuthenticated }) {
+function Navbar() {
   const dispatch = useDispatch();
 
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
   const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
 
   const onChange = () => {
@@ -67,12 +67,4 @@ function Navbar({ isAuthenticated }) {
   );
 }
 
-Navbar.propTypes = {
-  isAuthenticated: PropTypes.bool.isRequired
-};
-
-const mapStateToProps = (state) => ({
-  isAuthenticated: state.auth.isAuthenticated
-});
-
-export default connect(mapStateToProps, null)(Navbar);
+export default Navbar;

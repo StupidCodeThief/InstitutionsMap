@@ -6,6 +6,7 @@ const isEmpty = require("lodash/isEmpty");
 const { BadRequest, NotFound } = require("../utils/errors");
 const { validatePassword } = require("../validation/auth");
 const { createToken, sendRecoverPasswordLink } = require("../utils/passwordRecovery/passwordRecovery");
+const { getHashedPassword } = require("../utils/bcrypt/hashedPassword");
 const User = require("../database/models/User");
 
 const passwordRecovery = async (req, res, next) => {
@@ -26,6 +27,8 @@ const passwordRecovery = async (req, res, next) => {
     const setResetUrl = `${req.protocol}://localhost:3000/password/reset?token=${token}`;
 
     sendRecoverPasswordLink(email, setResetUrl);
+
+    
 
     res.json({ msg: "Recover link was sent" });
   } catch (error) {
@@ -57,15 +60,14 @@ const resetPassword = async (req, res, next) => {
     const isMatch = await bcrypt.compare(password, user.password);
 
     if (isMatch) throw new BadRequest("Your new password can not be similar to current password");
-    
-    const salt = await bcrypt.genSalt(10);
-    password = await bcrypt.hash(password, salt);
-    
+
+    password = await getHashedPassword(password);
+
     user.password = password;
 
     await user.save();
 
-    res.json({ msg: "Password successfully changed", pass: password });
+    res.json({ msg: "Password successfully changed"});
   } catch (error) {
     console.error(error.message);
     next(error);

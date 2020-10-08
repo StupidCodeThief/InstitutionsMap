@@ -15,7 +15,22 @@ import { notification } from "antd";
 
 export const loadUser = () => async (dispatch) => {
   try {
-    const res = await axios.get("/api/auth/login");
+    const res = await axios.get("/api/user/get-user");
+
+    dispatch({
+      type: USER_LOADED,
+      payload: res.data
+    });
+  } catch (error) {
+    dispatch({
+      type: AUTH_ERROR
+    });
+  }
+};
+
+export const getUserById = (id) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/user/get-user/${id}`);
 
     dispatch({
       type: USER_LOADED,
@@ -100,7 +115,7 @@ export const login = (userCredential, type) => async (dispatch) => {
   }
 };
 
-export const getRecoveryPasswordLink = async (email) =>  {
+export const getRecoveryPasswordLink = async (email) => {
   const config = {
     headers: {
       "Content-Type": "application/json"
@@ -114,7 +129,7 @@ export const getRecoveryPasswordLink = async (email) =>  {
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    notification.warning({ message: errors.data });
   }
 };
 
@@ -193,5 +208,4 @@ export const logout = () => async (dispatch) => {
 
     notification.warning({ message: errors.message });
   }
-  
 };

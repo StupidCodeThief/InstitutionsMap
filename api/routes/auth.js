@@ -18,7 +18,6 @@ const auth = require("../middlewares/auth");
 
 router.post("/login", login);
 router.get("/logout", logout);
-router.get("/login", auth, getUser);
 router.post("/register", register);
 router.post("/google", authenticationGoogle);
 router.post("/facebook", authenticationFacebook);

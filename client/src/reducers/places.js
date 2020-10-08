@@ -46,6 +46,7 @@ export default function (state = initialState, action) {
       return {
         ...state,
         places: [],
+        placesWithData: [],
         loading: false
       };
     case PLACES_ERROR:

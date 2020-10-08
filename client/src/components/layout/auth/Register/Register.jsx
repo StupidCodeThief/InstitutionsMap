@@ -1,7 +1,6 @@
 import { useSelector } from "react-redux";
 import React from "react";
 import { Link, Redirect } from "react-router-dom";
-import PropTypes from "prop-types";
 
 import RegisterForm from "./RegisterForm/RegisterForm";
 import Facebook from "../Login/Facebook/Facebook";
@@ -26,14 +25,12 @@ function Register() {
       <Div width={"50vh"}>
         <P>Register Your Account</P>
         <RegisterForm />
-      </Div>
-      <div style={{margin: "0 auto"}}>
         <Link to="/login">Already has an account?</Link>
         <Span>
           <Google />
           <Facebook />
         </Span>
-      </div>
+      </Div>
     </Container>
   );
 }

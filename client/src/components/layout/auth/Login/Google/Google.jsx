@@ -7,6 +7,8 @@ import { GoogleLogin } from "react-google-login";
 
 import { login } from "../../../../../actions/auth";
 
+import "./Google.styles.css"
+
 function Google({ login }) {
   const responseGoogle = (response) => {
     const token = response.tokenId;
@@ -19,7 +21,7 @@ function Google({ login }) {
       <GoogleLogin
         clientId="413367035338-ca6o4nk3kfme0f3d9m8eo26mepb1ueum.apps.googleusercontent.com"
         render={(renderProps) => (
-          <Button onClick={renderProps.onClick} className={"ant-btn-primary"}>
+          <Button onClick={renderProps.onClick} className={"ant-btn-primary btn"}>
             LogIn with Google
           </Button>
         )}

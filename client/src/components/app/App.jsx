@@ -17,6 +17,7 @@ import ForgotPassword from "../dashboard/auth/ForgotPassword/ForgotPassword";
 import ResetPassword from "../dashboard/auth/ResetPassword/ResetPassword";
 import AddLoginType from "../dashboard/auth/AddLoginType/AddLoginType";
 import UserProfile from "../dashboard/UserProfile/UserProfile";
+import User from "../dashboard/User/User";
 
 import { loadUser } from "../../actions/auth";
 
@@ -26,8 +27,6 @@ function App() {
   useEffect(() => {
     store.dispatch(loadUser());
   }, []);
-
-
 
   return (
     <Provider store={store}>
@@ -43,6 +42,7 @@ function App() {
           <PrivateRoute exact path="/dashboard" component={Dashboard} />
           <PrivateRoute exact path="/add-login-type" component={AddLoginType} />
           <PrivateRoute exact path="/user/profile" component={UserProfile} />
+          <PrivateRoute exact path="/user/:id" component={User} />
         </Switch>
       </Router>
     </Provider>

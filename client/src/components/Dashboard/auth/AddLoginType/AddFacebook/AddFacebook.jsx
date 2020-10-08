@@ -1,19 +1,21 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 
 import FacebookLogin from "react-facebook-login";
 
 import { addLoginType } from "../../../../../actions/auth";
 
-function AddFacebook({ addLoginType }) {
+function AddFacebook() {
+  const dispatch = useDispatch();
+
+  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
   const responseFacebook = (response) => {
-    addLoginType(response, "facebook");
+    dispatch(addLoginType(response, "facebook"));
   };
 
   return (
     <>
-      <h2>Add Facebook account</h2>
+      <h2 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>Add Facebook account</h2>
       <FacebookLogin
         appId="2769260053317770"
         autoLoad={false}
@@ -26,12 +28,4 @@ function AddFacebook({ addLoginType }) {
   );
 }
 
-AddFacebook.propTypes = {
-  addLoginType: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = {
-  addLoginType
-};
-
-export default connect(null, mapDispatchToProps)(AddFacebook);
+export default AddFacebook;

@@ -1,6 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Form, Input, Button } from "antd";
 
@@ -9,28 +8,25 @@ import { Container } from "././../../../app/App.styles";
 import { resetPassword } from "../../../../actions/auth";
 
 import { formItemLayout, tailFormItemLayout, extractTokenFromUrl } from "./ResetPassword.service";
+import { H1 } from "../../../app/App.styles";
 
-function ResetPassword({ resetPassword }) {
-  // let token = "";
+function ResetPassword() {
+  const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const url_string = window.location.href;
-
-  //   const url = new URL(url_string);
-  //   token = url.searchParams.get("token");
-  // }, []);
+  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
 
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
     // console.log(values);
     const token = extractTokenFromUrl();
-    
-    resetPassword(values, token);
+
+    dispatch(resetPassword(values, token));
   };
 
   return (
-    <Container backgroundColor={"white"}>
+    <Container backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}>
+      <H1 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>Set new password</H1>
       <Form {...formItemLayout} form={form} name="resetPassword" onFinish={onFinish} scrollToFirstError>
         <Form.Item
           name="password"
@@ -52,7 +48,7 @@ function ResetPassword({ resetPassword }) {
           ]}
           hasFeedback
         >
-          <Input.Password />
+          <Input.Password placeholder="New password" />
         </Form.Item>
 
         <Form.Item
@@ -76,7 +72,7 @@ function ResetPassword({ resetPassword }) {
             })
           ]}
         >
-          <Input.Password />
+          <Input.Password placeholder="Confirm password" />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
@@ -89,12 +85,4 @@ function ResetPassword({ resetPassword }) {
   );
 }
 
-ResetPassword.propTypes = {
-  resetPassword: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = {
-  resetPassword
-};
-
-export default connect(null, mapDispatchToProps)(ResetPassword);
+export default ResetPassword;

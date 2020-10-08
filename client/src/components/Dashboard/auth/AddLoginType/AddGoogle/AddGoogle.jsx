@@ -1,25 +1,31 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useDispatch, useSelector } from "react-redux";
 
 import { Button } from "antd";
 import { GoogleLogin } from "react-google-login";
 
 import { addLoginType } from "../../../../../actions/auth";
 
-function AddGoogle({ addLoginType }) {
+import "./AddGoogle.styles.css";
+
+function AddGoogle() {
+  const dispatch = useDispatch();
+
+  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
+
   const responseGoogle = (response) => {
     const token = response.tokenId;
 
-    addLoginType({ token: token }, "google");
+    dispatch(addLoginType({ token: token }, "google"));
   };
+
   return (
     <>
-      <h2>Add Google account</h2>
+      <h2 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>Add Google account</h2>
       <GoogleLogin
-        clientId="413367035338-ca6o4nk3kfme0f3d9m8eo26mepb1ueum.apps.googleusercontent.com"
+        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         render={(renderProps) => (
-          <Button onClick={renderProps.onClick} className={"ant-btn-primary"}>
+          <Button onClick={renderProps.onClick} className={"ant-btn-primary btn"}>
             Add Google account
           </Button>
         )}
@@ -32,12 +38,4 @@ function AddGoogle({ addLoginType }) {
   );
 }
 
-AddGoogle.propTypes = {
-  addLoginType: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = {
-  addLoginType
-};
-
-export default connect(null, mapDispatchToProps)(AddGoogle);
+export default AddGoogle;

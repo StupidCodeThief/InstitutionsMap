@@ -8,6 +8,10 @@
   height: 100%;
 }
 
+.btn {
+  margin-right: 5px;
+}
+
 .btn-geo {
   position: absolute;
   bottom: 24px;

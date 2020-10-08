@@ -9,21 +9,6 @@ const { setCookie, clearCookie } = require("../utils/setCookie/setCookie");
 const User = require("../database/models/User");
 const { getHashedPassword } = require("../utils/bcrypt/hashedPassword");
 
-const getUser = async (req, res) => {
-  try {
-    const user = await User.findById(req.user.id).select("-password");
-
-    if (!user) {
-      throw new BadRequest({ errors: [{ msg: "User not found" }] }, "User not found");
-    }
-
-    res.json(user);
-  } catch (error) {
-    console.error(error.message);
-    res.status(500).send("Server error");
-  }
-};
-
 const login = async (req, res, next) => {
   try {
     const { email, password } = req.body;
@@ -71,7 +56,7 @@ const logout = async (req, res, next) => {
 
 const register = async (req, res, next) => {
   try {
-    const { userName, email, password, avatar } = req.body;
+    const { userName, email, password, avatar = "" } = req.body;
 
     const errors = validateRegisterData(userName, email, password);
 
@@ -92,7 +77,10 @@ const register = async (req, res, next) => {
       password
     });
 
-    user.password = getHashedPassword(password);
+    console.log(user.password);
+    console.log(getHashedPassword(password));
+
+    user.password = await getHashedPassword(password);
 
     await user.save();
 
@@ -232,7 +220,7 @@ const addGoogleToAccount = async (req, res, next) => {
 
 const addEmailToAccount = async (req, res, next) => {
   try {
-    const { email, password } = req.body;
+    let { email, password } = req.body;
 
     const errors = validateLoginData(email, password);
 
@@ -240,7 +228,7 @@ const addEmailToAccount = async (req, res, next) => {
       throw new BadRequest(errors);
     }
 
-    password = getHashedPassword(password)
+    password = await getHashedPassword(password);
 
     const user = await User.findOneAndUpdate({ _id: req.user.id }, { email: email, password: password });
 
@@ -254,7 +242,6 @@ const addEmailToAccount = async (req, res, next) => {
 };
 
 module.exports = {
-  getUser,
   login,
   register,
   authenticationGoogle,

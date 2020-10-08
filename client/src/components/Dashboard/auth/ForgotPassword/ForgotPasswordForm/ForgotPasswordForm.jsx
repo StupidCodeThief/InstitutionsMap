@@ -4,7 +4,6 @@ import { useDispatch } from "react-redux";
 import { Form, Input, Button } from "antd";
 
 import { getRecoveryPasswordLink } from "../../../../../actions/auth";
-import { ACCOUNT_UPDATED } from "../../../../../actions/types";
 
 function ForgotPasswordForm() {
   const dispatch = useDispatch();
@@ -12,7 +11,7 @@ function ForgotPasswordForm() {
   const onFinish = (values) => {
     console.log("Success:", values);
 
-    dispatch({ type: ACCOUNT_UPDATED, payload: getRecoveryPasswordLink(values) });
+    dispatch(getRecoveryPasswordLink(values));
   };
 
   const onFinishFailed = (errorInfo) => {

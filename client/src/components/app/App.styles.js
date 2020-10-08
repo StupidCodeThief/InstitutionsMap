@@ -8,11 +8,15 @@ export const Container = styled.section`
   top: 70px;
   left: 15px;
   right: 15px;
-  bottom: 35px;
+  bottom: 15px;
   padding-top: 5%;
+  padding-bottom: 5%;
   padding-left: 25%;
   padding-right: 25%;
   z-index: 2;
+  overflow: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 `;
 
 export const Header = styled.header`

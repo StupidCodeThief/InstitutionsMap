@@ -72,16 +72,15 @@ export const deleteVisitedPlace = (placeId) => async (dispatch) => {
 };
 
 export const getPlacesData = (searchData, map) => async (dispatch) => {
-  console.log(searchData);
-
   const request = {
     placeId: searchData,
     fields: ["name", "rating", "formatted_address", "icon", "photo", "review"]
   };
 
-  if (window.google) {
-    console.log("gapi script loaded");
-  }
+  // if (window.google) {
+  //   console.log("gapi script loaded");
+  // }
+  
   const google = window.google;
   const service = new google.maps.places.PlacesService(map);
   service.getDetails(request, callback);
