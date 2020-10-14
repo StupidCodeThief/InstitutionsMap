@@ -10,6 +10,6 @@ router.patch("/", auth, saveVisitedPlace);
 router.patch("/delete-place", auth, deleteVisitedPlace);
 
 router.patch("/add-comment", auth, addComment);
-router.get("/get-comments", auth, getComments);
+router.get("/get-comments/:id", auth, getComments);
 
 module.exports = router;

@@ -5,12 +5,15 @@ import {
   MAP_LOADED,
   MAP_ERROR,
   PLACE_DATA_ERROR,
-  PLACE_DATA_LOADED
+  PLACE_DATA_LOADED,
+  COMMENTS_ERROR,
+  COMMENTS_LOADED
 } from "../actions/types";
 
 const initialState = {
   places: [],
   placesWithData: [],
+  comments: [],
   map: null,
   loading: true
 };
@@ -42,11 +45,24 @@ export default function (state = initialState, action) {
         placesWithData: [],
         loading: false
       };
+    case COMMENTS_LOADED:
+      return {
+        ...state,
+        comments: [...payload],
+        loading: false
+      };
+    case COMMENTS_ERROR:
+      return {
+        ...state,
+        comments: [],
+        loading: false
+      };
     case PLACES_CLEAR:
       return {
         ...state,
         places: [],
         placesWithData: [],
+        comments: [],
         loading: false
       };
     case PLACES_ERROR:

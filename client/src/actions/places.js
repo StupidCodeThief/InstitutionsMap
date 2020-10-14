@@ -1,6 +1,13 @@
 import axios from "axios";
 
-import { PLACES_ERROR, USERS_LOADED, PLACE_DATA_ERROR, PLACE_DATA_LOADED } from "./types";
+import {
+  PLACES_ERROR,
+  USERS_LOADED,
+  PLACE_DATA_ERROR,
+  PLACE_DATA_LOADED,
+  COMMENTS_ERROR,
+  COMMENTS_LOADED
+} from "./types";
 
 import { notification } from "antd";
 
@@ -119,3 +126,42 @@ export const getPlacesDatabyId = (searchData, map) => async (dispatch) => {
   }
 };
 
+export const getComments = (placeId) => async (dispatch) => {
+  try {
+    const res = await axios.get(`/api/places/get-comments/${placeId}`);
+
+    dispatch({
+      type: COMMENTS_LOADED,
+      payload: res.data
+    });
+  } catch (error) {
+    console.log(error.message);
+    dispatch({
+      type: COMMENTS_ERROR
+    });
+  }
+};
+
+export const addComment = (placeId, comment) => async (dispatch) => {
+  try {
+    const config = {
+      headers: {
+        "Content-Type": "application/json"
+      }
+    };
+
+    const body = JSON.stringify({ placeId, comment });
+
+    const res = await axios.patch(`/api/places/add-comment`, body, config);
+
+    notification.success({ message: res.data.msg });
+  } catch (error) {
+    const errors = error.response.data;
+
+    notification.warning({ message: errors.message });
+
+    dispatch({
+      type: COMMENTS_ERROR
+    });
+  }
+};

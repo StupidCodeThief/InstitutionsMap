@@ -3,7 +3,7 @@ const isEmpty = require("lodash/isEmpty");
 const User = require("../database/models/User");
 const Place = require("../database/models/Place");
 
-const { BadRequest } = require("../utils/errors");
+const { BadRequest, NotFound } = require("../utils/errors");
 const { validatePlaceId, validateComment } = require("../validation/places");
 
 const saveVisitedPlace = async (req, res, next) => {
@@ -69,7 +69,7 @@ const addComment = async (req, res, next) => {
 
     const newComment = {
       text: comment,
-      name: user.name,
+      name: user.userName,
       avatar: user.avatar,
       user: req.user.id
     };
@@ -97,20 +97,12 @@ const addComment = async (req, res, next) => {
 
 const getComments = async (req, res, next) => {
   try {
-    const { placeId } = req.body;
-
-    const errors = validatePlaceId(placeId);
-
-    if (!isEmpty(errors)) {
-      throw new BadRequest(errors);
-    }
-
-    const place = await Place.findOne({ place: placeId });
+    const place = await Place.findOne({ place: req.params.id });
 
     if (place) {
       res.json(place.comments);
     } else {
-      res.json({ msg: "No comments for this place!" });
+      throw new NotFound("Comments not found");
     }
   } catch (error) {
     console.error(error.message);

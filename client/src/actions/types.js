@@ -22,5 +22,8 @@ export const PLACES_LOADED = "PLACES_LOADED";
 export const PLACES_CLEAR = "PLACES_CLEAR";
 export const PLACES_ERROR = "PLACES_ERROR";
 
+export const COMMENTS_LOADED = "COMMENTS_LOADED";
+export const COMMENTS_ERROR = "COMMENTS_ERROR";
+
 export const UI_THEME_CHANGED = "UI_THEME_CHANGED";
 
