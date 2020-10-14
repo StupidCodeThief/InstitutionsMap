@@ -11,8 +11,8 @@ export const Container = styled.section`
   bottom: 15px;
   padding-top: 5%;
   padding-bottom: 5%;
-  padding-left: 25%;
-  padding-right: 25%;
+  padding-left: 20%;
+  padding-right: 20%;
   z-index: 2;
   overflow: auto;
   -ms-overflow-style: none;

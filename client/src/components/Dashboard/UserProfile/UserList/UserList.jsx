@@ -22,7 +22,7 @@ function UserList() {
     <div>
       {users.map((user) => {
         return (
-          <Link to={`/user/${user._id}`} key={user.id}>
+          <Link to={`/user/${user._id}`} key={user._id}>
             <Card style={{ width: 300, marginBottom: 16 }}>
               <Meta
                 avatar={<Avatar src={user.avatar || defaultAvatar} alt="place image" />}

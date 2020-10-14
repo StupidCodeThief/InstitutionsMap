@@ -69,7 +69,6 @@ function Map() {
     setMarkers([]);
 
     service.nearbySearch(request, (results, status, pagination) => {
-
       if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
         const request = {
           query,
@@ -108,8 +107,6 @@ function Map() {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         response.push(...results);
 
-        dispatch({ type: PLACES_LOADED, payload: results });
-
         results.map((place) => {
           setMarkers((markers) => [
             ...markers,
@@ -131,6 +128,8 @@ function Map() {
           setCenter({ ...center, lat: response[0].geometry.location.lat(), lng: response[0].geometry.location.lng() });
         }
       }
+
+      dispatch({ type: PLACES_LOADED, payload: response });
     });
   };
 

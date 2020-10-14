@@ -71,23 +71,48 @@ export const deleteVisitedPlace = (placeId) => async (dispatch) => {
   }
 };
 
-export const getPlacesData = (searchData, map) => async (dispatch) => {
+export const getPlacesDataArray = (searchData, map) => async (dispatch) => {
   const request = {
     placeId: searchData,
-    fields: ["name", "rating", "formatted_address", "icon", "photo", "review"]
+    fields: ["formatted_address", "icon", "name", "opening_hours", "photos", "rating", "types", "reviews", "place_id"]
   };
 
-  // if (window.google) {
-  //   console.log("gapi script loaded");
-  // }
-  
+  const response = [];
+  const google = window.google;
+  const service = new google.maps.places.PlacesService(map);
+
+  function callback(place, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+      response.push(place);
+
+      if (searchData.length === response.length) {
+        dispatch({ type: PLACE_DATA_LOADED, payload: response });
+      }
+    } else {
+      dispatch({ type: PLACE_DATA_ERROR });
+    }
+  }
+
+  await searchData.map((place) => {
+    request.placeId = place;
+
+    service.getDetails(request, callback);
+  });
+};
+
+export const getPlacesDatabyId = (searchData, map) => async (dispatch) => {
+  const request = {
+    placeId: searchData,
+    fields: ["formatted_address", "icon", "name", "opening_hours", "photos", "rating", "types", "reviews", "place_id"]
+  };
+
   const google = window.google;
   const service = new google.maps.places.PlacesService(map);
   service.getDetails(request, callback);
 
   function callback(place, status) {
     if (status === google.maps.places.PlacesServiceStatus.OK) {
-      dispatch({ type: PLACE_DATA_LOADED, payload: place });
+      dispatch({ type: PLACE_DATA_LOADED, payload: [place] });
     } else {
       dispatch({ type: PLACE_DATA_ERROR });
     }

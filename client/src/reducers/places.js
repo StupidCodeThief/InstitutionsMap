@@ -27,13 +27,13 @@ export default function (state = initialState, action) {
     case PLACES_LOADED:
       return {
         ...state,
-        places: state.places.concat(payload),
+        places: [...payload, ...state.places],
         loading: false
       };
     case PLACE_DATA_LOADED:
       return {
         ...state,
-        placesWithData: state.placesWithData.concat(payload),
+        placesWithData: [...state.placesWithData, ...payload],
         loading: false
       };
     case PLACE_DATA_ERROR:

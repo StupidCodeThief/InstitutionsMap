@@ -16,6 +16,7 @@ function UserInfo({ user }) {
         <p>
           Registered: <Moment format="YYYY.MM.DD">{user.date}</Moment>
         </p>
+        <p>Total places visited: {user.visitedPlaces.length}</p>
       </div>
       <Avatar src={user.avatar || defaultAvatar} alt="users avatar" />
     </ProfileCard>

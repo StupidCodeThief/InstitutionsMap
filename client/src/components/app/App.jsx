@@ -18,6 +18,7 @@ import ResetPassword from "../dashboard/auth/ResetPassword/ResetPassword";
 import AddLoginType from "../dashboard/auth/AddLoginType/AddLoginType";
 import UserProfile from "../dashboard/UserProfile/UserProfile";
 import User from "../dashboard/User/User";
+import PlaceDetails from "../dashboard/PlaceDetails/PlaceDetails";
 
 import { loadUser } from "../../actions/auth";
 
@@ -43,6 +44,7 @@ function App() {
           <PrivateRoute exact path="/add-login-type" component={AddLoginType} />
           <PrivateRoute exact path="/user/profile" component={UserProfile} />
           <PrivateRoute exact path="/user/:id" component={User} />
+          <PrivateRoute exact path="/place-info/:id" component={PlaceDetails} />
         </Switch>
       </Router>
     </Provider>

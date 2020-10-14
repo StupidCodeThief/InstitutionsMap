@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 import { Button, Card, Avatar } from "antd";
 
@@ -15,8 +16,6 @@ function Dashboard() {
 
   const onClick = () => setPlaceCount(placeCount + 5);
 
-  // console.log(places)
-
   // let url = "";
   // if (places[0]) {
   //   url = places[0].photos[0].getUrl({maxWidth: 32, maxHeight: 32});
@@ -25,7 +24,7 @@ function Dashboard() {
 
   return (
     <>
-      {!loading || (
+      {places.length && (
         <LeftSideContainer backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}>
           {places.length
             ? places.map((place, index) => {
@@ -37,13 +36,15 @@ function Dashboard() {
                   }
 
                   return (
-                    <Card style={{ width: 300, marginTop: 16 }} key={place.place_id}>
-                      <Meta
-                        avatar={<Avatar src={url || place.icon} alt="place image" />}
-                        title={place.name}
-                        description={place.vicinity || place.formatted_address}
-                      />
-                    </Card>
+                    <Link to={`/place-info/${place.place_id}`} key={place.place_id}>
+                      <Card style={{ width: 300, marginTop: 16 }} >
+                        <Meta
+                          avatar={<Avatar src={url || place.icon} alt="place image" />}
+                          title={place.name}
+                          description={place.vicinity || place.formatted_address}
+                        />
+                      </Card>
+                    </Link>
                   );
                 }
               })
