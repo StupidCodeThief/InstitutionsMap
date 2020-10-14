@@ -118,3 +118,4 @@ export const getPlacesDatabyId = (searchData, map) => async (dispatch) => {
     }
   }
 };
+
