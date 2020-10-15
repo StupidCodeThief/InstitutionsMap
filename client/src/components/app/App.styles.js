@@ -4,7 +4,8 @@ export const Container = styled.section`
   position: absolute;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.backgroundColor};
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   top: 70px;
   left: 15px;
   right: 15px;
@@ -17,10 +18,26 @@ export const Container = styled.section`
   overflow: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
+
+  h1,
+  h2,
+  h3 {
+    color: ${({ theme }) => theme.text};
+  }
+
+  .theme-provider {
+    color: ${({ theme }) => theme.text};
+  }
+
+  .tabs {
+    color: ${({ theme }) => theme.text};
+    overflow: scroll;
+  ]}
 `;
 
 export const Header = styled.header`
-  background-color: ${(props) => props.backgroundColor};
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   position: absolute;
   top: 15px;
   left: 15px;

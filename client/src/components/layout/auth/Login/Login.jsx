@@ -10,18 +10,14 @@ import { Container, H1, P, Div } from "././../../../app/App.styles";
 
 function Login() {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
 
   if (isAuthenticated) {
     return <Redirect to="/dashboard" />;
   }
 
   return (
-    <Container
-      backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}
-      style={{ color: isThemeDArk ? "#fff" : "#27292D" }}
-    >
-      <H1 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>Sign In</H1>
+    <Container>
+      <H1>Sign In</H1>
       <Div>
         <P className="lead">Sign into Your Account</P>
         <LoginForm />

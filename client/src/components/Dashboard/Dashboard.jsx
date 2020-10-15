@@ -10,7 +10,6 @@ function Dashboard() {
   const { Meta } = Card;
   const places = useSelector((state) => state.places.places);
   const loading = useSelector((state) => state.places.loading);
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
 
   const [placeCount, setPlaceCount] = useState(5);
 
@@ -25,7 +24,7 @@ function Dashboard() {
   return (
     <>
       {places.length && (
-        <LeftSideContainer backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}>
+        <LeftSideContainer>
           {places.length
             ? places.map((place, index) => {
                 if (index <= placeCount) {

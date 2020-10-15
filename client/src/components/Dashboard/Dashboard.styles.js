@@ -6,7 +6,8 @@ export const LeftSideContainer = styled.section`
   left: 15px;
   display: flex;
   flex-direction: column;
-  background-color: ${(props) => props.backgroundColor};
+  background: ${({ theme }) => theme.body};
+  color: ${({ theme }) => theme.text};
   width: fit-content;
   min-height: 60%;
   max-height: 80%;

@@ -65,9 +65,10 @@ function LoginForm({ login }) {
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Log in
-        </Button>{" "}
-        Or <Link to="/register">register now!</Link>
+          Login
+        </Button>
+        <span className="theme-provider"> or </span>
+         <Link to="/register">register now!</Link>
       </Form.Item>
     </Form>
   );

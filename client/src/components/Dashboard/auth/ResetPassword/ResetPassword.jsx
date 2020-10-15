@@ -13,20 +13,17 @@ import { H1 } from "../../../app/App.styles";
 function ResetPassword() {
   const dispatch = useDispatch();
 
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
-
   const [form] = Form.useForm();
 
   const onFinish = (values) => {
-    // console.log(values);
     const token = extractTokenFromUrl();
 
     dispatch(resetPassword(values, token));
   };
 
   return (
-    <Container backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}>
-      <H1 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>Set new password</H1>
+    <Container>
+      <H1>Set new password</H1>
       <Form {...formItemLayout} form={form} name="resetPassword" onFinish={onFinish} scrollToFirstError>
         <Form.Item
           name="password"

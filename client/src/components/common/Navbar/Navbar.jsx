@@ -1,10 +1,8 @@
 import React from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
-import { Button, Switch } from "antd";
-
-import { uiTheme } from "../../../actions/uiTheme";
+import { Button } from "antd";
 
 import Logout from "../../dashboard/auth/Logout/Logout";
 
@@ -12,26 +10,22 @@ import { Header, Ul, Li } from "../../app/App.styles";
 
 import "./navbar.css";
 
-function Navbar() {
-  const dispatch = useDispatch();
-
+function Navbar({ themeToggler }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
-
-  const onChange = () => {
-    console.log("Theme changed");
-    dispatch(uiTheme());
-  };
 
   return (
-    <Header backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}>
+    <Header
+    // backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}
+    >
       <Link to="/" className={"logo"}></Link>
       <nav className="navigation-container">
         <Ul>
           {isAuthenticated ? (
             <>
               <Li>
-                <Switch onChange={onChange} />
+                <Button className={"ant-btn ant-btn-primary"} onClick={themeToggler}>
+                  Switch Theme
+                </Button>
               </Li>
               <Li>
                 <Button className={"ant-btn ant-btn-primary"}>

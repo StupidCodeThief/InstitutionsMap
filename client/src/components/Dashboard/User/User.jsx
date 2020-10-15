@@ -20,14 +20,10 @@ function User({ match }) {
     };
   }, []);
 
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
   const user = useSelector((state) => state.auth.user);
 
   return (
-    <Container
-      backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}
-      style={{ color: isThemeDArk ? "#fff" : "#27292D" }}
-    >
+    <Container>
       {!!Object.keys(user).length && <UserInfo user={user} />}
       <UserPlaces />
       <span>

@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Button } from "antd";
 import { GoogleLogin } from "react-google-login";
@@ -11,8 +11,6 @@ import "./AddGoogle.styles.css";
 function AddGoogle() {
   const dispatch = useDispatch();
 
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
-
   const responseGoogle = (response) => {
     const token = response.tokenId;
 
@@ -21,7 +19,7 @@ function AddGoogle() {
 
   return (
     <>
-      <h2 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>Add Google account</h2>
+      <h2>Add Google account</h2>
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         render={(renderProps) => (

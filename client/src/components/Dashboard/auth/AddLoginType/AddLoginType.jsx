@@ -9,13 +9,10 @@ import AddFacebook from "./AddFacebook/AddFacebook";
 import { Container } from "././../../../app/App.styles";
 
 function AddLoginType() {
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
   const user = useSelector((state) => state.auth.user);
 
   return (
-    <Container
-      backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}
-    >
+    <Container>
       <AddEmail />
       {user.googleId ? null : <AddGoogle />}
       {user.facebookId ? null : <AddFacebook />}

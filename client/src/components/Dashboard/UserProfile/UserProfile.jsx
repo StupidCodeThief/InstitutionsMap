@@ -12,7 +12,6 @@ import UserPlaces from "./UserPlaces/UserPlaces";
 const { TabPane } = Tabs;
 
 function UserProfile() {
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
   const user = useSelector((state) => state.auth.user);
 
   function callback(key) {
@@ -20,12 +19,8 @@ function UserProfile() {
   }
 
   return (
-    <Container backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}>
-      <Tabs
-        defaultActiveKey="1"
-        onChange={callback}
-        style={{ color: isThemeDArk ? "#fff" : "#27292D", overflow: "scroll" }}
-      >
+    <Container>
+      <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
         <TabPane tab="User info" key="1">
           <UserInfo user={user} />
         </TabPane>

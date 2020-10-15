@@ -16,7 +16,6 @@ const { TextArea } = Input;
 function PlaceDetails({ match }) {
   const dispatch = useDispatch();
 
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
   const map = useSelector((state) => state.places.map);
   const user = useSelector((state) => state.auth.user);
 
@@ -47,19 +46,16 @@ function PlaceDetails({ match }) {
   const onSubmit = () => {
     dispatch(addComment(match.params.id, commentData));
     setCommentData("");
-    setTimeout(() => dispatch(getComments(match.params.id)), 1000)
+    setTimeout(() => dispatch(getComments(match.params.id)), 1000);
   };
 
   return (
-    <Container
-      backgroundColor={isThemeDArk ? "#27292D" : "#ebedf0"}
-      style={{ color: isThemeDArk ? "#fff" : "#27292D" }}
-    >
+    <Container>
       {placeWithData ? (
         <>
           <PlaceInfo>
             <div>
-              <h2 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>{placeWithData.name}</h2>
+              <h2>{placeWithData.name}</h2>
               {placeWithData.rating && (
                 <>
                   <b>Google rating:</b> <Rate disabled defaultValue={Math.round(placeWithData.rating)} />{" "}
@@ -78,7 +74,7 @@ function PlaceDetails({ match }) {
             <PlacePhoto src={placeWithData.icon} alt="place photo" />
           </PlaceInfo>
           <br />
-          <h3 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>Users rewies:</h3>
+          <h3>Users rewies:</h3>
           {comments.length
             ? comments.map((comment) => (
                 <>
@@ -119,7 +115,7 @@ function PlaceDetails({ match }) {
             />
           )}
 
-          <h3 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>Reviews from google:</h3>
+          <h3>Reviews from google:</h3>
           {placeWithData.reviews?.length
             ? placeWithData.reviews.map((review) => (
                 <>

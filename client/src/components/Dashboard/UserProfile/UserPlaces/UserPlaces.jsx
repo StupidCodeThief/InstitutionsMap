@@ -19,7 +19,6 @@ function UserPlaces() {
   const loading = useSelector((state) => state.places.loading);
   const visitedPlaces = useSelector((state) => state.auth.user.visitedPlaces);
   const map = useSelector((state) => state.places.map);
-  const isThemeDArk = useSelector((state) => state.uiTheme.darckTheme);
   const placesWithData = useSelector((state) => state.places.placesWithData);
 
   const [places, setPlaces] = useState([]);
@@ -70,8 +69,8 @@ function UserPlaces() {
   return (
     <>
       {visitedPlaces.length ? (
-        <div style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>
-          <h3 style={{ color: isThemeDArk ? "#fff" : "#27292D" }}>Visited Places</h3>
+        <div>
+          <h3>Visited Places</h3>
           <Select
             placeholder="Sort by"
             style={{ width: 120, marginBottom: "10px", marginRight: "10px" }}
@@ -80,47 +79,23 @@ function UserPlaces() {
             <Option value="Name">Name</Option>
             <Option value="Rating">Rating</Option>
           </Select>
-          <Checkbox
-            name="cafe"
-            onChange={(e) => getFilteredArray(places, e)}
-            style={{ color: isThemeDArk ? "#fff" : "#27292D" }}
-          >
-            Cafe
+          <Checkbox name="cafe" onChange={(e) => getFilteredArray(places, e)}>
+            <span className="theme-provider">Cafe</span>
           </Checkbox>
-          <Checkbox
-            name="bank"
-            onChange={(e) => getFilteredArray(places, e)}
-            style={{ color: isThemeDArk ? "#fff" : "#27292D" }}
-          >
-            Bank
+          <Checkbox name="bank" onChange={(e) => getFilteredArray(places, e)}>
+            <span className="theme-provider">Bank</span>
           </Checkbox>
-          <Checkbox
-            name="gar"
-            onChange={(e) => getFilteredArray(places, e)}
-            style={{ color: isThemeDArk ? "#fff" : "#27292D" }}
-          >
-            Bar
+          <Checkbox name="bar" onChange={(e) => getFilteredArray(places, e)}>
+            <span className="theme-provider">Bar</span>
           </Checkbox>
-          <Checkbox
-            name="gym"
-            onChange={(e) => getFilteredArray(places, e)}
-            style={{ color: isThemeDArk ? "#fff" : "#27292D" }}
-          >
-            Gym
+          <Checkbox name="gym" onChange={(e) => getFilteredArray(places, e)}>
+            <span className="theme-provider">Gym</span>
           </Checkbox>
-          <Checkbox
-            name="museum"
-            onChange={(e) => getFilteredArray(places, e)}
-            style={{ color: isThemeDArk ? "#fff" : "#27292D" }}
-          >
-            Museum
+          <Checkbox name="museum" onChange={(e) => getFilteredArray(places, e)}>
+            <span className="theme-provider">Museum</span>
           </Checkbox>
-          <Checkbox
-            name="all"
-            onChange={(e) => setPlaces(placesWithData)}
-            style={{ color: isThemeDArk ? "#fff" : "#27292D" }}
-          >
-            All
+          <Checkbox name="all" onChange={(e) => setPlaces(placesWithData)}>
+            <span className="theme-provider">All</span>
           </Checkbox>
         </div>
       ) : (

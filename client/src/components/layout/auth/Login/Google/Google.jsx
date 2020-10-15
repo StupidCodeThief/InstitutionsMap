@@ -22,7 +22,7 @@ function Google({ login }) {
         clientId="413367035338-ca6o4nk3kfme0f3d9m8eo26mepb1ueum.apps.googleusercontent.com"
         render={(renderProps) => (
           <Button onClick={renderProps.onClick} className={"ant-btn-primary btn"}>
-            LogIn with Google
+            Login with Google
           </Button>
         )}
         buttonText="Login"
