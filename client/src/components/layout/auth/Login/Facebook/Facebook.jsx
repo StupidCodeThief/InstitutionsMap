@@ -6,7 +6,7 @@ import FacebookLogin from "react-facebook-login";
 
 import { login } from "../../../../../actions/auth";
 
-function Facebook({ login }) {
+function Facebook({ login, t }) {
   const responseFacebook = (response) => {
     const { name, email = null, picture, id } = response;
 
@@ -15,17 +15,19 @@ function Facebook({ login }) {
 
   return (
     <FacebookLogin
-      appId="2769260053317770"
+      appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
       autoLoad={false}
       fields="name,email,picture"
       callback={responseFacebook}
       cssClass={"ant-btn ant-btn-primary"}
+      textButton={t("Login with facebook")}
     />
   );
 }
 
 Facebook.propTypes = {
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {

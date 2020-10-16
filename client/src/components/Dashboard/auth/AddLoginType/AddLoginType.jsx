@@ -8,14 +8,14 @@ import AddFacebook from "./AddFacebook/AddFacebook";
 
 import { Container } from "././../../../app/App.styles";
 
-function AddLoginType() {
+function AddLoginType({ t }) {
   const user = useSelector((state) => state.auth.user);
 
   return (
     <Container>
-      <AddEmail />
-      {user.googleId ? null : <AddGoogle />}
-      {user.facebookId ? null : <AddFacebook />}
+      <AddEmail t={t} />
+      {user.googleId ? null : <AddGoogle t={t} />}
+      {user.facebookId ? null : <AddFacebook t={t}/>}
     </Container>
   );
 }

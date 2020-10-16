@@ -8,7 +8,7 @@ import { addLoginType } from "../../../../../actions/auth";
 
 import "./AddGoogle.styles.css";
 
-function AddGoogle() {
+function AddGoogle({ t }) {
   const dispatch = useDispatch();
 
   const responseGoogle = (response) => {
@@ -19,15 +19,14 @@ function AddGoogle() {
 
   return (
     <>
-      <h2>Add Google account</h2>
+      <h2>{t("Add Google account")}</h2>
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         render={(renderProps) => (
           <Button onClick={renderProps.onClick} className={"ant-btn-primary btn"}>
-            Add Google account
+            {t("Add Google account")}
           </Button>
         )}
-        buttonText="Login"
         onSuccess={responseGoogle}
         onFailure={responseGoogle}
         cookiePolicy={"single_host_origin"}

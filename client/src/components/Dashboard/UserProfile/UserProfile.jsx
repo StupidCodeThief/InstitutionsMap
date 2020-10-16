@@ -11,7 +11,7 @@ import UserPlaces from "./UserPlaces/UserPlaces";
 
 const { TabPane } = Tabs;
 
-function UserProfile() {
+function UserProfile({ t }) {
   const user = useSelector((state) => state.auth.user);
 
   function callback(key) {
@@ -21,18 +21,18 @@ function UserProfile() {
   return (
     <Container>
       <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
-        <TabPane tab="User info" key="1">
-          <UserInfo user={user} />
+        <TabPane tab={t("User info")} key="1">
+          <UserInfo user={user} t={t} />
         </TabPane>
-        <TabPane tab="User places" key="2">
-          <UserPlaces />
+        <TabPane tab={t("User places")} key="2">
+          <UserPlaces t={t} />
         </TabPane>
-        <TabPane tab="All users" key="3">
-          <UserList />
+        <TabPane tab={t("All users")} key="3">
+          <UserList t={t} />
         </TabPane>
       </Tabs>
       <Button className={"ant-btn ant-btn-primary"} style={{ width: "150px" }}>
-        <Link to="/dashboard">Back to map</Link>
+        <Link to="/dashboard">{t("Back to map")}</Link>
       </Button>
     </Container>
   );

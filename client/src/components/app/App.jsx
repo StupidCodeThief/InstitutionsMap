@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import { ThemeProvider } from "styled-components";
+import { useTranslation } from "react-i18next";
 
 import store from "../../store";
 
@@ -28,6 +29,7 @@ import { useDarkMode } from "../../hooks/useDarkMode";
 import { loadUser } from "../../actions/auth";
 
 import "../../App.css";
+import "../../utils/localization/i18n";
 
 function App() {
   useEffect(() => {
@@ -35,6 +37,11 @@ function App() {
   }, []);
 
   const [theme, themeToggler] = useDarkMode();
+  const { t, i18n } = useTranslation();
+
+  const changeLanguage = (lng) => {
+    i18n.changeLanguage(lng);
+  };
 
   const themeMode = theme === "light" ? lightTheme : darkTheme;
 
@@ -45,19 +52,19 @@ function App() {
       <GlobalStyles />
       <Provider store={store}>
         <Router>
-          <Navbar themeToggler={changeTheme} />
-          <Map />
+          <Navbar themeToggler={changeTheme} languageToggler={changeLanguage} t={t} />
+          <Map t={t} />
           <Switch>
             <Route exact path="/" component={Landing} />
-            <Route exact path="/login" component={Login} />
-            <Route exact path="/register" component={Register} />
-            <Route exact path="/forgot-password" component={ForgotPassword} />
-            <Route exact path="/password/reset/" component={ResetPassword} />
-            <PrivateRoute exact path="/dashboard" component={Dashboard} />
-            <PrivateRoute exact path="/add-login-type" component={AddLoginType} />
-            <PrivateRoute exact path="/user/profile" component={UserProfile} />
-            <PrivateRoute exact path="/user/:id" component={User} />
-            <PrivateRoute exact path="/place-info/:id" component={PlaceDetails} />
+            <Route exact path="/login" render={(props) => <Login {...props} t={t} />} />
+            <Route exact path="/register" render={(props) => <Register {...props} t={t} />} />
+            <Route exact path="/forgot-password" render={(props) => <ForgotPassword {...props} t={t} />} />
+            <Route exact path="/password/reset/" render={(props) => <ResetPassword {...props} t={t} />} />
+            <PrivateRoute exact path="/dashboard" component={Dashboard} t={t} />
+            <PrivateRoute exact path="/add-login-type" component={AddLoginType} t={t} />
+            <PrivateRoute exact path="/user/profile" component={UserProfile} t={t} />
+            <PrivateRoute exact path="/user/:id" component={User} t={t} />
+            <PrivateRoute exact path="/place-info/:id" component={PlaceDetails} t={t} />
           </Switch>
         </Router>
       </Provider>

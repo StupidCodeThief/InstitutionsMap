@@ -8,9 +8,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import { login } from "../../../../../actions/auth";
 
-function LoginForm({ login }) {
-
-
+function LoginForm({ login, t }) {
   const onFinish = (values) => {
     login(values);
   };
@@ -29,53 +27,47 @@ function LoginForm({ login }) {
         rules={[
           {
             required: true,
-            message: "Please input your Email!"
+            message: t("Please input your Email!")
           },
           {
             type: "email",
-            message: "The input is not valid E-mail!"
+            message: t("The input is not valid E-mail!")
           }
         ]}
       >
-        <Input
-          prefix={<UserOutlined className="site-form-item-icon" />}
-          placeholder="Email"
-        />
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="E-mail" />
       </Form.Item>
       <Form.Item
         name="password"
         rules={[
           {
             required: true,
-            message: "Please input your Password!"
+            message: t("Please input your Password!")
           }
         ]}
       >
-        <Input
-          prefix={<LockOutlined className="site-form-item-icon" />}
-          type="password"
-          placeholder="Password"
-        />
+        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder={t("Password")} />
       </Form.Item>
       <Form.Item>
         <Link className="login-form-forgot" to="/forgot-password">
-          Forgot password
+          {t("Forgot password?")}
         </Link>
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Login
+          {t("Login")}
         </Button>
-        <span className="theme-provider"> or </span>
-         <Link to="/register">register now!</Link>
+        <span className="theme-provider"> {t("or")} </span>
+      <Link to="/register">{t("register now!")}</Link>
       </Form.Item>
     </Form>
   );
 }
 
 LoginForm.propTypes = {
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {

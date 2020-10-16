@@ -5,7 +5,7 @@ import FacebookLogin from "react-facebook-login";
 
 import { addLoginType } from "../../../../../actions/auth";
 
-function AddFacebook() {
+function AddFacebook({ t }) {
   const dispatch = useDispatch();
 
   const responseFacebook = (response) => {
@@ -14,14 +14,14 @@ function AddFacebook() {
 
   return (
     <>
-      <h2>Add Facebook account</h2>
+      <h2>{t("Add Facebook account")}</h2>
       <FacebookLogin
-        appId="2769260053317770"
+        appId={process.env.REACT_APP_FACEBOOK_CLIENT_ID}
         autoLoad={false}
         fields="name,email,picture"
         callback={responseFacebook}
         cssClass={"ant-btn ant-btn-primary"}
-        textButton={"Add Facebook account"}
+        textButton={t("Add Facebook account")}
       />
     </>
   );

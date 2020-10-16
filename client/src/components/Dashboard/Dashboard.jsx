@@ -6,7 +6,7 @@ import { Button, Card, Avatar } from "antd";
 
 import { LeftSideContainer } from "./Dashboard.styles";
 
-function Dashboard() {
+function Dashboard({ t }) {
   const { Meta } = Card;
   const places = useSelector((state) => state.places.places);
   const loading = useSelector((state) => state.places.loading);
@@ -14,6 +14,8 @@ function Dashboard() {
   const [placeCount, setPlaceCount] = useState(5);
 
   const onClick = () => setPlaceCount(placeCount + 5);
+
+  console.log(typeof t)
 
   // let url = "";
   // if (places[0]) {
@@ -56,7 +58,7 @@ function Dashboard() {
                 marginTop: "10px"
               }}
             >
-              More results
+              {t("More results")}
             </Button>
           )}
         </LeftSideContainer>

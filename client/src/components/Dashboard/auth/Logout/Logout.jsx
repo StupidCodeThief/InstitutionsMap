@@ -6,19 +6,20 @@ import { Button } from "antd";
 
 import { logout } from "../../../../actions/auth";
 
-function Logout({ logout }) {
+function Logout({ logout, t }) {
   const onClick = () => {
     logout();
   };
   return (
     <Button onClick={onClick} className={"ant-btn ant-btn-default"}>
-      Logout
+      {t("Logout")}
     </Button>
   );
 }
 
 Logout.propTypes = {
-  logout: PropTypes.func.isRequired
+  logout: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {

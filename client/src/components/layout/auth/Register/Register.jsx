@@ -8,7 +8,7 @@ import Google from "../Login/Google/Google";
 
 import { Container, H1, P, Div, Span } from "././../../../app/App.styles";
 
-function Register() {
+function Register({ t }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   if (isAuthenticated) {
@@ -16,15 +16,15 @@ function Register() {
   }
 
   return (
-    <Container    >
-      <H1>Register</H1>
+    <Container>
+      <H1>{t("Register")}</H1>
       <Div width={"50vh"}>
-        <P>Register Your Account</P>
-        <RegisterForm />
-        <Link to="/login">Already has an account?</Link>
+        <P>{t("Register Your Account")}</P>
+        <RegisterForm t={t} />
+        <Link to="/login">{t("Already has an account?")}</Link>
         <Span>
-          <Google />
-          <Facebook />
+          <Google t={t} />
+          <Facebook t={t} />
         </Span>
       </Div>
     </Container>

@@ -8,7 +8,7 @@ import Google from "./Google/Google";
 
 import { Container, H1, P, Div } from "././../../../app/App.styles";
 
-function Login() {
+function Login({ t }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   if (isAuthenticated) {
@@ -17,11 +17,11 @@ function Login() {
 
   return (
     <Container>
-      <H1>Sign In</H1>
+      <H1>{t("Sign In")}</H1>
       <Div>
-        <P className="lead">Sign into Your Account</P>
-        <LoginForm />
-        <Google /> <Facebook />
+        <P className="lead">{t("Sign into Your Account")}</P>
+        <LoginForm t={t}/>
+        <Google t={t}/> <Facebook t={t}/>
       </Div>
     </Container>
   );

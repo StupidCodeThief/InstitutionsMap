@@ -7,22 +7,22 @@ import { GoogleLogin } from "react-google-login";
 
 import { login } from "../../../../../actions/auth";
 
-import "./Google.styles.css"
+import "./Google.styles.css";
 
-function Google({ login }) {
+function Google({ login, t }) {
   const responseGoogle = (response) => {
     const token = response.tokenId;
-    
+
     login({ token: token }, "google");
   };
 
   return (
     <>
       <GoogleLogin
-        clientId="413367035338-ca6o4nk3kfme0f3d9m8eo26mepb1ueum.apps.googleusercontent.com"
+        clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         render={(renderProps) => (
           <Button onClick={renderProps.onClick} className={"ant-btn-primary btn"}>
-            Login with Google
+            {t("Login with Google")}
           </Button>
         )}
         buttonText="Login"
@@ -35,7 +35,8 @@ function Google({ login }) {
 }
 
 Google.propTypes = {
-  login: PropTypes.func.isRequired
+  login: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {
@@ -43,4 +44,3 @@ const mapDispatchToProps = {
 };
 
 export default connect(null, mapDispatchToProps)(Google);
-

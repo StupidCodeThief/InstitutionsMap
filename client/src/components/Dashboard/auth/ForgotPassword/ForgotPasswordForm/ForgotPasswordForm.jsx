@@ -5,7 +5,7 @@ import { Form, Input, Button } from "antd";
 
 import { getRecoveryPasswordLink } from "../../../../../actions/auth";
 
-function ForgotPasswordForm() {
+function ForgotPasswordForm({ t }) {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
@@ -32,20 +32,20 @@ function ForgotPasswordForm() {
         rules={[
           {
             required: true,
-            message: "Please input your Email!"
+            message: t("Please input your Email!")
           },
           {
             type: "email",
-            message: "The input is not valid E-mail!"
+            message: t("The input is not valid E-mail!")
           }
         ]}
       >
-        <Input placeholder="Email" />
+        <Input placeholder={t("E-mail")} />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">
-          Submit
+          {t("Submit")}
         </Button>
       </Form.Item>
     </Form>

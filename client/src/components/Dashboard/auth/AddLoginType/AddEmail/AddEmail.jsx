@@ -7,7 +7,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import { addLoginType } from "../../../../../actions/auth";
 
-function AddEmail({ addLoginType }) {
+function AddEmail({ addLoginType, t }) {
   const onFinish = (values) => {
     addLoginType(values);
   };
@@ -26,31 +26,31 @@ function AddEmail({ addLoginType }) {
         rules={[
           {
             required: true,
-            message: "Please input your Email!"
+            message: t("Please input your Email!")
           },
           {
             type: "email",
-            message: "The input is not valid E-mail!"
+            message: t("The input is not valid E-mail!")
           }
         ]}
       >
-        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder="Email" />
+        <Input prefix={<UserOutlined className="site-form-item-icon" />} placeholder={t("E-mail")} />
       </Form.Item>
       <Form.Item
         name="password"
         rules={[
           {
             required: true,
-            message: "Please input your Password!"
+            message: t("Please input your Password!")
           }
         ]}
       >
-        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder="Password" />
+        <Input prefix={<LockOutlined className="site-form-item-icon" />} type="password" placeholder={t("Password")} />
       </Form.Item>
 
       <Form.Item>
         <Button type="primary" htmlType="submit" className="login-form-button">
-          Add Email to account
+         {t("Add Email to account")}
         </Button>{" "}
       </Form.Item>
     </Form>
@@ -58,7 +58,8 @@ function AddEmail({ addLoginType }) {
 }
 
 AddEmail.propTypes = {
-  addLoginType: PropTypes.func.isRequired
+  addLoginType: PropTypes.func.isRequired,
+  t: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = {

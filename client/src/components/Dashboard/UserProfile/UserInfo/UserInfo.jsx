@@ -1,11 +1,10 @@
 import React from "react";
-import { useSelector } from "react-redux";
 import Moment from "react-moment";
 
 import { ProfileCard, Avatar } from "./UserInfo.styles";
 import defaultAvatar from "../../../../img/PNG/defaultAvatar.png";
 
-function UserInfo({ user }) {
+function UserInfo({ user, t }) {
   return (
     <ProfileCard>
       <div>

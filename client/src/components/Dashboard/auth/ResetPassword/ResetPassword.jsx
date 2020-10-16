@@ -1,5 +1,5 @@
 import React from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 
 import { Form, Input, Button } from "antd";
 
@@ -10,7 +10,7 @@ import { resetPassword } from "../../../../actions/auth";
 import { formItemLayout, tailFormItemLayout, extractTokenFromUrl } from "./ResetPassword.service";
 import { H1 } from "../../../app/App.styles";
 
-function ResetPassword() {
+function ResetPassword({ t }) {
   const dispatch = useDispatch();
 
   const [form] = Form.useForm();
@@ -23,40 +23,41 @@ function ResetPassword() {
 
   return (
     <Container>
-      <H1>Set new password</H1>
+      <H1>{t("Set new password")}</H1>
       <Form {...formItemLayout} form={form} name="resetPassword" onFinish={onFinish} scrollToFirstError>
         <Form.Item
           name="password"
-          label="Password"
+          label={t("Password")}
           rules={[
             {
               required: true,
-              message: "Please input your password!"
+              message: t("Please input your password!")
             },
             {
               min: 8,
-              message: "Password must be 8 characters or more!"
+              message: t("Password must be 8 characters or more!")
             },
             {
               pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-              message:
+              message: t(
                 "Password must include at least one upper case letter, one lower case letter, and one numeric digit"
+              )
             }
           ]}
           hasFeedback
         >
-          <Input.Password placeholder="New password" />
+          <Input.Password placeholder={t("New password")} />
         </Form.Item>
 
         <Form.Item
           name="confirm"
-          label="Confirm Password"
+          label={t("Confirm Password")}
           dependencies={["password"]}
           hasFeedback
           rules={[
             {
               required: true,
-              message: "Please confirm your password!"
+              message: t("Please confirm your password!")
             },
             ({ getFieldValue }) => ({
               validator(rule, value) {
@@ -64,17 +65,17 @@ function ResetPassword() {
                   return Promise.resolve();
                 }
 
-                return Promise.reject("The two passwords that you entered do not match!");
+                return Promise.reject(t("The two passwords that you entered do not match!"));
               }
             })
           ]}
         >
-          <Input.Password placeholder="Confirm password" />
+          <Input.Password placeholder={t("Confirm password")} />
         </Form.Item>
 
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Submit
+            {t("Submit")}
           </Button>
         </Form.Item>
       </Form>

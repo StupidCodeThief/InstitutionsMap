@@ -10,7 +10,7 @@ import { Header, Ul, Li } from "../../app/App.styles";
 
 import "./navbar.css";
 
-function Navbar({ themeToggler }) {
+function Navbar({ themeToggler, languageToggler, t }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
@@ -23,34 +23,38 @@ function Navbar({ themeToggler }) {
           {isAuthenticated ? (
             <>
               <Li>
+                <button onClick={() => languageToggler("ru-RU")}>рус</button>
+                <button onClick={() => languageToggler("en-EN")}>en</button>
+              </Li>
+              <Li>
                 <Button className={"ant-btn ant-btn-primary"} onClick={themeToggler}>
-                  Switch Theme
+                  {t("Switch Theme")}
                 </Button>
               </Li>
               <Li>
                 <Button className={"ant-btn ant-btn-primary"}>
-                  <Link to="/user/profile">Profile</Link>
+                  <Link to="/user/profile">{t("Profile")}</Link>
                 </Button>
               </Li>
               <Li>
                 <Button className={"ant-btn ant-btn-primary"}>
-                  <Link to="/add-login-type">Add Account</Link>
+                  <Link to="/add-login-type">{t("Add Account")}</Link>
                 </Button>
               </Li>
               <Li>
-                <Logout />
+                <Logout t={t} />
               </Li>
             </>
           ) : (
             <>
               <Li>
                 <Button className={"ant-btn ant-btn-primary"}>
-                  <Link to="/register">Register</Link>
+                  <Link to="/register">{t("Register")}</Link>
                 </Button>
               </Li>
               <Li>
                 <Button className={"ant-btn ant-btn-primary"}>
-                  <Link to="/login">Login</Link>
+                  <Link to="/login">{t("Login")}</Link>
                 </Button>
               </Li>
             </>

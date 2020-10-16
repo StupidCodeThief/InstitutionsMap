@@ -10,7 +10,7 @@ import { libraries, mapContainerStyle } from "./GoogleMap.service";
 import { findCenter, getCenter } from "../../../utils/geolocation/findCurrentLocation";
 import { saveVisitedPlace, deleteVisitedPlace } from "../../../actions/places";
 
-function Map() {
+function Map({ t }) {
   const { isLoaded, loadError } = useLoadScript({
     googleMapsApiKey: process.env.REACT_APP_GOOGLE_MAPS_API_KEY,
     libraries
@@ -172,7 +172,7 @@ function Map() {
   }, []);
 
   if (loadError) {
-    notification.warning({ message: "Map is not available now..." });
+    notification.warning({ message: t("Map is not available now...") });
     dispatch({ type: MAP_ERROR });
     return <></>;
   }
@@ -233,7 +233,7 @@ function Map() {
               }}
               className={"btn-geo ant-btn ant-btn-default"}
             >
-              Find me!
+              {t("Find me!")}
             </Button>
             <Button
               onClick={() => {
@@ -241,13 +241,13 @@ function Map() {
               }}
               className={"btn-geo-2 ant-btn ant-btn-primary"}
             >
-              Find place!
+              {t("Find place!")}
             </Button>
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
               <input
                 onChange={onChange}
                 type="text"
-                placeholder="Find place"
+                placeholder={t("Find place!")}
                 value={userInput}
                 style={{
                   boxSizing: `border-box`,
@@ -291,7 +291,7 @@ function Map() {
             }}
           >
             <div>
-              <h2>{"Custom marker" && selected.name}</h2>
+              <h2>{t("Custom marker") && selected.name}</h2>
               {selected.address && <p>Address: {selected.address}</p>}
               <p>
                 Position: lat: {selected.lat}, lng: {selected.lng}
@@ -302,7 +302,7 @@ function Map() {
                   savePlace(selected.place_id);
                 }}
               >
-                Mark as visited
+                {t("Mark as visited")}
               </Button>
             </div>
           </InfoWindow>
