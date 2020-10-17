@@ -47,7 +47,30 @@
   "User info": "Профиль",
   "User places": "Посещенные места",
   "All users": "Все пользователи",
-  "Back to map": "К карте"
-
-
+  "Back to map": "К карте",
+  "Username": "Имя пользователя",
+  "Email": "Email",
+  "Registered": "На сайте с",
+  "Total places visited": "Всего мест посещено",
+  "Visited Places": "Посещенные места",
+  "Sort by": "Сортировать",
+  "Name": "Имя",
+  "Rating": "Ретинг",
+  "Cafe": "Кафе",
+  "Bank": "Банк",
+  "Bar": "Бар",
+  "Gym": "Спортзал",
+  "Museum": "Музей",
+  "All": "Все",
+  "No visited places": "Нет посещенных мест",
+  "Back to profile": "Назад к профилю",
+  "Google rating": "Рейтинг Google",
+  "Adress": "Адрес",
+  "Tags": "Тэги",
+  "Users rewies": "Отзывы пользователей",
+  "No reviews": "Нет отзывов",
+  "Leave comment": "Оставить отзыв",
+  "Add Comment": "Добавить отзыв",
+  "Reviews from google": "Отзывы пользователей Google",
+  "place details not found!": "Информация не найдена!"
 }

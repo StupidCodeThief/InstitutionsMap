@@ -25,10 +25,10 @@ function UserProfile({ t }) {
           <UserInfo user={user} t={t} />
         </TabPane>
         <TabPane tab={t("User places")} key="2">
-          <UserPlaces t={t} />
+          <UserPlaces user={user} t={t} />
         </TabPane>
         <TabPane tab={t("All users")} key="3">
-          <UserList t={t} />
+          <UserList />
         </TabPane>
       </Tabs>
       <Button className={"ant-btn ant-btn-primary"} style={{ width: "150px" }}>

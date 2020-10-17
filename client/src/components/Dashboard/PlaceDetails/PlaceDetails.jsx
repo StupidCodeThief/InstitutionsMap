@@ -13,7 +13,7 @@ import { PlaceInfo, PlacePhoto } from "./PlaceDetails.styles";
 
 const { TextArea } = Input;
 
-function PlaceDetails({ match }) {
+function PlaceDetails({ match, t }) {
   const dispatch = useDispatch();
 
   const map = useSelector((state) => state.places.map);
@@ -58,12 +58,14 @@ function PlaceDetails({ match }) {
               <h2>{placeWithData.name}</h2>
               {placeWithData.rating && (
                 <>
-                  <b>Google rating:</b> <Rate disabled defaultValue={Math.round(placeWithData.rating)} />{" "}
+                  <b>{t("Google rating")}:</b> <Rate disabled defaultValue={Math.round(placeWithData.rating)} />{" "}
                 </>
               )}
-              <p>Adress: {placeWithData.formatted_address}</p>
               <p>
-                Tags:{" "}
+                {t("Adress")}: {placeWithData.formatted_address}
+              </p>
+              <p>
+                {t("Tags")}:{" "}
                 {placeWithData.types.length
                   ? placeWithData.types.map((type, index) => <span key={index}>{type} </span>)
                   : null}
@@ -74,7 +76,7 @@ function PlaceDetails({ match }) {
             <PlacePhoto src={placeWithData.icon} alt="place photo" />
           </PlaceInfo>
           <br />
-          <h3>Users rewies:</h3>
+          <h3>{t("Users rewies")}:</h3>
           {comments.length
             ? comments.map((comment) => (
                 <>
@@ -91,10 +93,10 @@ function PlaceDetails({ match }) {
                   />
                 </>
               ))
-            : "No reviews"}
+            : t("No reviews")}
           {!isCommentFormOpen && (
             <Button className={"ant-btn ant-btn-primary btn"} style={{ width: "150px" }} onClick={onToggle}>
-              Leave comment
+              {t("Leave comment")}
             </Button>
           )}
           {isCommentFormOpen && (
@@ -107,7 +109,7 @@ function PlaceDetails({ match }) {
                   </Form.Item>
                   <Form.Item>
                     <Button onClick={onSubmit} className={"ant-btn ant-btn-primary btn"}>
-                      Add Comment
+                      {t("Add Comment")}
                     </Button>
                   </Form.Item>
                 </Form>
@@ -115,7 +117,7 @@ function PlaceDetails({ match }) {
             />
           )}
 
-          <h3>Reviews from google:</h3>
+          <h3>{t("Reviews from google")}:</h3>
           {placeWithData.reviews?.length
             ? placeWithData.reviews.map((review) => (
                 <>
@@ -132,17 +134,17 @@ function PlaceDetails({ match }) {
                   />
                 </>
               ))
-            : "No reviews"}
+            : t("No reviews")}
         </>
       ) : (
-        "place details not found!"
+        t("place details not found!")
       )}
       <span>
         <Button className={"ant-btn ant-btn-primary btn"} style={{ width: "150px" }}>
-          <Link to="/dashboard">Back to map</Link>
+          <Link to="/dashboard">{t("Back to map")}</Link>
         </Button>
         <Button className={"ant-btn ant-btn-primary btn"} style={{ width: "150px" }}>
-          <Link to="/user/profile">Back to profile</Link>
+          <Link to="/user/profile">{t("Back to profile")}</Link>
         </Button>
       </span>
     </Container>

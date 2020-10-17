@@ -13,27 +13,24 @@ const { Option } = Select;
 
 const { Meta } = Card;
 
-function UserPlaces() {
+function UserPlaces({ t }) {
   const dispatch = useDispatch();
 
-  const loading = useSelector((state) => state.places.loading);
-  const visitedPlaces = useSelector((state) => state.auth.user.visitedPlaces);
+  const user = useSelector((state) => state.auth.user);
   const map = useSelector((state) => state.places.map);
   const placesWithData = useSelector((state) => state.places.placesWithData);
 
   const [places, setPlaces] = useState([]);
 
   useEffect(() => {
-    dispatch(getPlacesDataArray(visitedPlaces, map));
+    if (user.visitedPlaces.length) dispatch(getPlacesDataArray(user.visitedPlaces, map));
 
-    // setPlaces(placesWithData);
     return function () {
       dispatch({ type: PLACES_CLEAR });
     };
-  }, []);
+  }, [user]);
 
   if (!places.length) setTimeout(() => setPlaces(placesWithData));
-  console.log(places);
 
   function handleSelect(value) {
     switch (value) {
@@ -68,41 +65,41 @@ function UserPlaces() {
 
   return (
     <>
-      {visitedPlaces.length ? (
+      {user.visitedPlaces.length ? (
         <div>
-          <h3>Visited Places</h3>
+          <h3>{t("Visited Places")}:</h3>
           <Select
-            placeholder="Sort by"
+            placeholder={t("Sort by")}
             style={{ width: 120, marginBottom: "10px", marginRight: "10px" }}
             onChange={handleSelect}
           >
-            <Option value="Name">Name</Option>
-            <Option value="Rating">Rating</Option>
+            <Option value="Name">{t("Name")}</Option>
+            <Option value="Rating">{t("Rating")}</Option>
           </Select>
           <Checkbox name="cafe" onChange={(e) => getFilteredArray(places, e)}>
-            <span className="theme-provider">Cafe</span>
+            <span className="theme-provider">{t("Cafe")}</span>
           </Checkbox>
           <Checkbox name="bank" onChange={(e) => getFilteredArray(places, e)}>
-            <span className="theme-provider">Bank</span>
+            <span className="theme-provider">{t("Bank")}</span>
           </Checkbox>
           <Checkbox name="bar" onChange={(e) => getFilteredArray(places, e)}>
-            <span className="theme-provider">Bar</span>
+            <span className="theme-provider">{t("Bar")}</span>
           </Checkbox>
           <Checkbox name="gym" onChange={(e) => getFilteredArray(places, e)}>
-            <span className="theme-provider">Gym</span>
+            <span className="theme-provider">{t("Gym")}</span>
           </Checkbox>
           <Checkbox name="museum" onChange={(e) => getFilteredArray(places, e)}>
-            <span className="theme-provider">Museum</span>
+            <span className="theme-provider">{t("Museum")}</span>
           </Checkbox>
           <Checkbox name="all" onChange={(e) => setPlaces(placesWithData)}>
-            <span className="theme-provider">All</span>
+            <span className="theme-provider">{t("All")}</span>
           </Checkbox>
         </div>
       ) : (
-        <h3>No visited places</h3>
+        <h3>{t("No visited places")}</h3>
       )}
       <DivWithScroll>
-        {loading || placesWithData.length
+        {placesWithData.length && user.visitedPlaces.length
           ? (places || placesWithData).map((place) => {
               return (
                 <Link to={`/place-info/${place.place_id}`} key={place.place_id}>
@@ -119,7 +116,7 @@ function UserPlaces() {
                 </Link>
               );
             })
-          : 0}
+          : null}
       </DivWithScroll>
     </>
   );
