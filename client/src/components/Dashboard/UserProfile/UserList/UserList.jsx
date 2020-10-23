@@ -14,7 +14,7 @@ function UserList() {
 
   useEffect(() => {
     dispatch(getUsers());
-  }, []);
+  }, [dispatch]);
 
   const users = useSelector((state) => state.auth.users);
 

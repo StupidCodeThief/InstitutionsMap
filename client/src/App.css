@@ -8,26 +8,36 @@
   height: 100%;
 }
 
+h1 {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+p {
+  font-size: 1.2em;
+}
+
 .btn {
   margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  width: 160px;
 }
 
-.btn-geo {
-  position: absolute;
-  bottom: 24px;
-  right: 60px;
-}
-
-.btn-geo-2 {
-  position: absolute;
-  top: 70px;
-  right: 15px;
-  height: 32px;
-  z-index: 1;
+.small-text {
+  font-size: 1em;
 }
 
 ::-webkit-scrollbar {
   /* chrome based */
   width: 0px; /* ширина scrollbar'a */
   background: transparent; /* опционально */
+}
+
+.am-navbar {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
 }

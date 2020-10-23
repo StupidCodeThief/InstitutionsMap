@@ -2,6 +2,8 @@ export const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 export const REGISTER_FAILURE = "REGISTER_FAILURE";
 
 export const USER_LOADED = "USER_LOADED";
+export const USER_INFO_LOADED = "USER_INFO_LOADED";
+export const USER_INFO_ERROR = "USER_INFO_ERROR";
 export const USERS_LOADED = "USERS_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
 
@@ -16,6 +18,7 @@ export const MAP_LOADED = "MAP_LOADED";
 export const MAP_ERROR = "MAP_ERROR";
 
 export const PLACE_DATA_LOADED = "PLACE_DATA_LOADED";
+export const PLACES_DATA_LOADED = "PLACES_DATA_LOADED";
 export const PLACE_DATA_ERROR = "PLACE_DATA_ERROR";
 
 export const PLACES_LOADED = "PLACES_LOADED";

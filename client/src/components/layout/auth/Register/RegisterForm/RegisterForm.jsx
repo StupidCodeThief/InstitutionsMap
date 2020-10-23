@@ -1,17 +1,40 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 
-import { Form, Input, Button } from "antd";
+import { Form, Input, Button, Upload } from "antd";
+import { LoadingOutlined, PlusOutlined } from "@ant-design/icons";
 
 import { register } from "../../../../../actions/auth";
+import { getBase64, beforeUpload } from "./RegisterForm.service";
 
 function RegisterForm({ t }) {
   const [form] = Form.useForm();
 
+  const [image, setImage] = useState({
+    imageUrl: null,
+    loading: false
+  });
+
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
+    values.avatar = image.imageUrl;
     dispatch(register(values));
+  };
+
+  const handleChange = (info) => {
+    if (info.file.status === "uploading") {
+      setImage({ loading: true });
+      return;
+    }
+    if (info.file.status === "done") {
+      getBase64(info.file.originFileObj, (imageUrl) => {
+        setImage({
+          imageUrl,
+          loading: false
+        });
+      });
+    }
   };
 
   return (
@@ -47,8 +70,9 @@ function RegisterForm({ t }) {
           },
           {
             pattern: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/,
-            message:
-             t( "Password must include at least one upper case letter, one lower case letter, and one numeric digit")
+            message: t(
+              "Password must include at least one upper case letter, one lower case letter, and one numeric digit"
+            )
           }
         ]}
         hasFeedback
@@ -101,12 +125,31 @@ function RegisterForm({ t }) {
         <Input placeholder={t("Nickname")} />
       </Form.Item>
 
-      <Form.Item
+      {/* <Form.Item
         name="avatar"
         // label="Avatar URL"
       >
         <Input placeholder={t("Avatar")} />
-      </Form.Item>
+      </Form.Item> */}
+
+      <Upload
+        name="avatar"
+        listType="picture-card"
+        className="avatar-uploader"
+        showUploadList={false}
+        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+        beforeUpload={beforeUpload}
+        onChange={handleChange}
+      >
+        {image.imageUrl ? (
+          <img src={image.imageUrl} alt="avatar" style={{ width: "100%" }} />
+        ) : (
+          <div>
+            {image.loading ? <LoadingOutlined /> : <PlusOutlined />}
+            <div style={{ marginTop: 8 }}>Upload</div>
+          </div>
+        )}
+      </Upload>
 
       <Form.Item>
         <Button type="primary" htmlType="submit">

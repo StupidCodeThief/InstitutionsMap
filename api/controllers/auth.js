@@ -77,9 +77,6 @@ const register = async (req, res, next) => {
       password
     });
 
-    console.log(user.password);
-    console.log(getHashedPassword(password));
-
     user.password = await getHashedPassword(password);
 
     await user.save();

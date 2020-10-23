@@ -6,11 +6,13 @@ import {
   MAP_ERROR,
   PLACE_DATA_ERROR,
   PLACE_DATA_LOADED,
+  PLACES_DATA_LOADED,
   COMMENTS_ERROR,
   COMMENTS_LOADED
 } from "../actions/types";
 
 const initialState = {
+  place: null,
   places: [],
   placesWithData: [],
   comments: [],
@@ -33,10 +35,16 @@ export default function (state = initialState, action) {
         places: [...payload, ...state.places],
         loading: false
       };
-    case PLACE_DATA_LOADED:
+    case PLACES_DATA_LOADED:
       return {
         ...state,
         placesWithData: [...state.placesWithData, ...payload],
+        loading: false
+      };
+    case PLACE_DATA_LOADED:
+      return {
+        ...state,
+        place: payload,
         loading: false
       };
     case PLACE_DATA_ERROR:

@@ -5,16 +5,23 @@ import moment from "moment";
 
 import { Comment, Tooltip, Avatar, Rate, Button, Form, Input } from "antd";
 
-import { getPlacesDatabyId, getComments, addComment } from "../../../actions/places";
+import {
+  getPlacesDatabyId,
+  getComments,
+  addComment,
+  saveVisitedPlace,
+  deleteVisitedPlace
+} from "../../../actions/places";
 import { PLACES_CLEAR } from "../../../actions/types";
 
 import { Container } from "../../app/App.styles";
-import { PlaceInfo, PlacePhoto } from "./PlaceDetails.styles";
+import { PlaceInfo, PlacePhoto, PlaceText } from "./PlaceDetails.styles";
 
 const { TextArea } = Input;
 
 function PlaceDetails({ match, t }) {
   const dispatch = useDispatch();
+  const [isVisited, setVisited] = useState();
 
   const map = useSelector((state) => state.places.map);
   const user = useSelector((state) => state.auth.user);
@@ -23,16 +30,19 @@ function PlaceDetails({ match, t }) {
     dispatch(getPlacesDatabyId(match.params.id, map));
     dispatch(getComments(match.params.id));
 
+    setVisited(user.visitedPlaces.includes(match.params.id));
     return function () {
       dispatch({ type: PLACES_CLEAR });
     };
-  }, []);
+  }, [user]);
 
   const [isCommentFormOpen, setCommentFormOpen] = useState(false);
   const [commentData, setCommentData] = useState("");
 
-  const [placeWithData] = useSelector((state) => state.places.placesWithData);
+  const placeWithData = useSelector((state) => state.places.place);
   const comments = useSelector((state) => state.places.comments);
+
+  console.log(placeWithData);
 
   const onToggle = () => {
     setCommentFormOpen(!isCommentFormOpen);
@@ -49,34 +59,52 @@ function PlaceDetails({ match, t }) {
     setTimeout(() => dispatch(getComments(match.params.id)), 1000);
   };
 
+  const savePlace = () => {
+    isVisited ? dispatch(deleteVisitedPlace(match.params.id)) : dispatch(saveVisitedPlace(match.params.id));
+  };
+  console.log(placeWithData);
+
   return (
     <Container>
       {placeWithData ? (
         <>
           <PlaceInfo>
-            <div>
-              <h2>{placeWithData.name}</h2>
+            <PlaceText>
+              <h2>
+                <strong>{placeWithData.name}</strong>
+              </h2>
               {placeWithData.rating && (
                 <>
-                  <b>{t("Google rating")}:</b> <Rate disabled defaultValue={Math.round(placeWithData.rating)} />{" "}
+                  <strong>{t("Google rating")}:</strong>{" "}
+                  <Rate disabled defaultValue={Math.round(placeWithData.rating)} />{" "}
                 </>
               )}
               <p>
-                {t("Adress")}: {placeWithData.formatted_address}
+                <strong> {t("Adress")}:</strong> {placeWithData.formatted_address}
               </p>
               <p>
-                {t("Tags")}:{" "}
+                <strong>{t("Tags")}:</strong>{" "}
                 {placeWithData.types.length
                   ? placeWithData.types.map((type, index) => <span key={index}>{type} </span>)
                   : null}
               </p>
-              {placeWithData.opening_hours?.weekday_text &&
-                placeWithData.opening_hours.weekday_text.map((text, index) => <span key={index}>{text} </span>)}
-            </div>
-            <PlacePhoto src={placeWithData.icon} alt="place photo" />
+              <p className={"small-text"}>
+                {placeWithData.opening_hours?.weekday_text &&
+                  placeWithData.opening_hours.weekday_text.map((text, index) => <span key={index}>{text} </span>)}
+              </p>
+              <Button type="default" onClick={savePlace}>
+                {isVisited ? t("Delete from visited") : t("Mark as visited")}
+              </Button>
+            </PlaceText>
+
+            <PlacePhoto>
+              <img src={placeWithData.photos[0].getUrl() || placeWithData.icon} alt={`${placeWithData.name}`} />
+            </PlacePhoto>
           </PlaceInfo>
           <br />
-          <h3>{t("Users rewies")}:</h3>
+          <h3>
+            <strong>{t("Users rewies")}:</strong>
+          </h3>
           {comments.length
             ? comments.map((comment) => (
                 <>
@@ -117,22 +145,22 @@ function PlaceDetails({ match, t }) {
             />
           )}
 
-          <h3>{t("Reviews from google")}:</h3>
+          <h3>
+            <strong>{t("Reviews from google")}:</strong>
+          </h3>
           {placeWithData.reviews?.length
             ? placeWithData.reviews.map((review) => (
-                <>
-                  <Comment
-                    key={review.time}
-                    author={<a href={review.author_url}>{review.author_name}</a>}
-                    avatar={<Avatar src={review.profile_photo_url} alt={review.author_name} />}
-                    content={<p>{review.text}</p>}
-                    datetime={
-                      <Tooltip>
-                        <span>{review.relative_time_description}</span>
-                      </Tooltip>
-                    }
-                  />
-                </>
+                <Comment
+                  key={review.time}
+                  author={<a href={review.author_url}>{review.author_name}</a>}
+                  avatar={<Avatar src={review.profile_photo_url} alt={review.author_name} />}
+                  content={<p>{review.text}</p>}
+                  datetime={
+                    <Tooltip>
+                      <span>{review.relative_time_description}</span>
+                    </Tooltip>
+                  }
+                />
               ))
             : t("No reviews")}
         </>

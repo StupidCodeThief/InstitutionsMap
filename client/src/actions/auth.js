@@ -8,15 +8,17 @@ import {
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
   LOG_OUT,
-  ACCOUNT_UPDATED
+  ACCOUNT_UPDATED,
+  USER_INFO_LOADED,
+  USER_INFO_ERROR
 } from "./types";
 
-import { notification } from "antd";
+import { showNotification } from "../utils/notifications/notification";
 
 export const loadUser = () => async (dispatch) => {
   try {
     const res = await axios.get("/api/user/get-user");
-    
+
     dispatch({
       type: USER_LOADED,
       payload: res.data
@@ -33,12 +35,12 @@ export const getUserById = (id) => async (dispatch) => {
     const res = await axios.get(`/api/user/get-user/${id}`);
 
     dispatch({
-      type: USER_LOADED,
+      type: USER_INFO_LOADED,
       payload: res.data
     });
   } catch (error) {
     dispatch({
-      type: AUTH_ERROR
+      type: USER_INFO_ERROR
     });
   }
 };
@@ -59,13 +61,13 @@ export const register = (userCredential) => async (dispatch) => {
       type: REGISTER_SUCCESS
     });
 
-    notification.success({ message: "Registration was successful" });
+    showNotification("Succesfully registered!", "success");
 
     dispatch(loadUser());
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    showNotification(errors.message, "warning");
 
     dispatch({
       type: REGISTER_FAILURE
@@ -107,7 +109,7 @@ export const login = (userCredential, type) => async (dispatch) => {
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    showNotification(errors.message, "warning");
 
     dispatch({
       type: LOGIN_FAILURE
@@ -129,7 +131,7 @@ export const getRecoveryPasswordLink = async (email) => {
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.data });
+    showNotification(errors.data, "warning");
   }
 };
 
@@ -145,12 +147,12 @@ export const resetPassword = async (password, token) => {
   try {
     await axios.post(`/api/auth/password/reset?token=${token}`, body, config);
 
-    notification.success({ message: "Password changed!" });
+    showNotification("Password changed!", "success");
   } catch (error) {
     console.log(error);
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    showNotification(errors.message, "warning");
   }
 };
 
@@ -184,13 +186,13 @@ export const addLoginType = (userData, type) => async (dispatch) => {
       type: ACCOUNT_UPDATED
     });
 
-    notification.success({ message: `You ${type} account successfully added!` });
+    showNotification(`Your ${type} account successfully added!`, "success");
 
     dispatch(loadUser());
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    showNotification(errors.message, "warning");
   }
 };
 
@@ -198,7 +200,7 @@ export const logout = () => async (dispatch) => {
   try {
     await axios.get("/api/auth/logout");
 
-    notification.warning({ message: "Logout" });
+    showNotification("Logout", "success");
 
     dispatch({
       type: LOG_OUT
@@ -206,6 +208,6 @@ export const logout = () => async (dispatch) => {
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    showNotification(errors.message, "warning");
   }
 };

@@ -33,7 +33,7 @@
   "Find me!": "Где я?",
   "Find place!": "Найти на карте!",
   "Custom marker": "Пользовательская метка",
-  "Mark as visited": "Отметить как посещенное",
+  "Mark as visited": "Я был здесь!",
   "Recovery password": "Восстановить пароль",
   "Enter your email address used for registration": "Введите пароль использованный при регистрации",
   "Do not have an account?": "Все еще нет аккаунта?",
@@ -72,5 +72,13 @@
   "Leave comment": "Оставить отзыв",
   "Add Comment": "Добавить отзыв",
   "Reviews from google": "Отзывы пользователей Google",
-  "place details not found!": "Информация не найдена!"
+  "place details not found!": "Информация не найдена!",
+  "Delete from visited": "Удалить из посещенных",
+  "Language": "Язык",
+  "Theme": "Тема",
+  "Account": "Аккаунт",
+  "Navigation": "Навигация",
+  "Find!": "Найти!",
+  "View details": "Подробнее",
+  "Search results": "Результаты поиска"
 }

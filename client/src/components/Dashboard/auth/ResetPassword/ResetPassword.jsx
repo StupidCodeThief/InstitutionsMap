@@ -8,7 +8,6 @@ import { Container } from "././../../../app/App.styles";
 import { resetPassword } from "../../../../actions/auth";
 
 import { formItemLayout, tailFormItemLayout, extractTokenFromUrl } from "./ResetPassword.service";
-import { H1 } from "../../../app/App.styles";
 
 function ResetPassword({ t }) {
   const dispatch = useDispatch();
@@ -23,7 +22,7 @@ function ResetPassword({ t }) {
 
   return (
     <Container>
-      <H1>{t("Set new password")}</H1>
+      <h1>{t("Set new password")}</h1>
       <Form {...formItemLayout} form={form} name="resetPassword" onFinish={onFinish} scrollToFirstError>
         <Form.Item
           name="password"

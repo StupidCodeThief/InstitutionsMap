@@ -5,12 +5,13 @@ import {
   USERS_LOADED,
   PLACE_DATA_ERROR,
   PLACE_DATA_LOADED,
-  PLACES_CLEAR,
+  PLACES_DATA_LOADED,
   COMMENTS_ERROR,
   COMMENTS_LOADED
 } from "./types";
 
-import { notification } from "antd";
+import { showNotification } from "../utils/notifications/notification";
+import { loadUser } from "./auth";
 
 export const getUsers = () => async (dispatch) => {
   try {
@@ -23,7 +24,7 @@ export const getUsers = () => async (dispatch) => {
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    showNotification(errors.message, "warning");
 
     dispatch({
       type: PLACES_ERROR
@@ -43,11 +44,13 @@ export const saveVisitedPlace = (placeId) => async (dispatch) => {
 
     await axios.patch("/api/places", body, config);
 
-    notification.success({ message: "Place saved" });
+    showNotification("Place saved", "success");
+
+    dispatch(loadUser());
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    showNotification(errors.message, "warning");
 
     dispatch({
       type: PLACES_ERROR
@@ -67,11 +70,13 @@ export const deleteVisitedPlace = (placeId) => async (dispatch) => {
 
     await axios.patch("/api/places/delete-place", body, config);
 
-    notification.success({ message: "Place deleted" });
+    showNotification("Place deleted", "success");
+
+    dispatch(loadUser());
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    showNotification(errors.message, "warning");
 
     dispatch({
       type: PLACES_ERROR
@@ -113,7 +118,7 @@ export const getPlacesDataArray = (searchData, map) => async (dispatch) => {
         }
       }
 
-      searchData.map((place) => {
+      searchData.forEach((place) => {
         request.placeId = place;
 
         service.getDetails(request, callback);
@@ -121,38 +126,70 @@ export const getPlacesDataArray = (searchData, map) => async (dispatch) => {
     });
   };
 
-  const data = Array.from(
-    await promisificatedPlaceDetails(searchData, map)
-      .then((res) => {
-        return res;
-      })
-      .catch(() => dispatch({ type: PLACE_DATA_ERROR }))
-  );
+  try {
+    const data = Array.from(
+      await promisificatedPlaceDetails(searchData, map)
+        .then((res) => {
+          return res;
+        })
+        .catch(() => dispatch({ type: PLACE_DATA_ERROR }))
+    );
 
-  console.log(data);
-
-  dispatch({
-    type: PLACE_DATA_LOADED,
-    payload: data
-  });
+    dispatch({
+      type: PLACES_DATA_LOADED,
+      payload: data
+    });
+  } catch (error) {
+    showNotification("Sorry, some error occured", "warning");
+  }
 };
 
 export const getPlacesDatabyId = (searchData, map) => async (dispatch) => {
-  const request = {
-    placeId: searchData,
-    fields: ["formatted_address", "icon", "name", "opening_hours", "photos", "rating", "types", "reviews", "place_id"]
+  const promisificatedPlaceDetails = function (searchData, map) {
+    return new Promise((resolve, reject) => {
+      const request = {
+        placeId: searchData,
+        fields: [
+          "formatted_address",
+          "icon",
+          "name",
+          "opening_hours",
+          "photos",
+          "rating",
+          "types",
+          "reviews",
+          "place_id"
+        ]
+      };
+
+      const google = window.google;
+      const service = new google.maps.places.PlacesService(map);
+
+      function callback(place, status) {
+        if (status === google.maps.places.PlacesServiceStatus.OK) {
+          resolve(place);
+        } else {
+          reject();
+        }
+      }
+
+      service.getDetails(request, callback);
+    });
   };
 
-  const google = window.google;
-  const service = new google.maps.places.PlacesService(map);
-  service.getDetails(request, callback);
+  try {
+    const data = await promisificatedPlaceDetails(searchData, map)
+      .then((res) => {
+        return res;
+      })
+      .catch(() => dispatch({ type: PLACE_DATA_ERROR }));
 
-  function callback(place, status) {
-    if (status === google.maps.places.PlacesServiceStatus.OK) {
-      dispatch({ type: PLACE_DATA_LOADED, payload: [place] });
-    } else {
-      dispatch({ type: PLACE_DATA_ERROR });
-    }
+    dispatch({
+      type: PLACE_DATA_LOADED,
+      payload: data
+    });
+  } catch (error) {
+    showNotification("Sorry, some error occured", "warning");
   }
 };
 
@@ -184,42 +221,14 @@ export const addComment = (placeId, comment) => async (dispatch) => {
 
     const res = await axios.patch(`/api/places/add-comment`, body, config);
 
-    notification.success({ message: res.data.msg });
+    showNotification(res.data.msg, "success");
   } catch (error) {
     const errors = error.response.data;
 
-    notification.warning({ message: errors.message });
+    showNotification(errors.message, "warning");
 
     dispatch({
       type: COMMENTS_ERROR
     });
   }
 };
-
-// getDetails before primisification
-// const request = {
-//   placeId: searchData,
-//   fields: ["formatted_address", "icon", "name", "opening_hours", "photos", "rating", "types", "reviews", "place_id"]
-// };
-
-// const response = [];
-// const google = window.google;
-// const service = new google.maps.places.PlacesService(map);
-
-// function callback(place, status) {
-//   if (status === google.maps.places.PlacesServiceStatus.OK) {
-//     response.push(place);
-
-//     if (searchData.length === response.length) {
-//       dispatch({ type: PLACE_DATA_LOADED, payload: response });
-//     }
-//   } else {
-//     dispatch({ type: PLACE_DATA_ERROR });
-//   }
-// }
-
-// await searchData.map((place) => {
-//   request.placeId = place;
-
-//   service.getDetails(request, callback);
-// });

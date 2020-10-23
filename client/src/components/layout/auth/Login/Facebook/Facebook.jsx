@@ -19,8 +19,8 @@ function Facebook({ login, t }) {
       autoLoad={false}
       fields="name,email,picture"
       callback={responseFacebook}
-      cssClass={"ant-btn ant-btn-primary"}
-      textButton={t("Login with facebook")}
+      cssClass={"ant-btn ant-btn-primary btn"}
+      textButton={t("Login with Facebook")}
     />
   );
 }

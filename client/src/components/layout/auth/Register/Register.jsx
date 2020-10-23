@@ -6,7 +6,9 @@ import RegisterForm from "./RegisterForm/RegisterForm";
 import Facebook from "../Login/Facebook/Facebook";
 import Google from "../Login/Google/Google";
 
-import { Container, H1, P, Div, Span } from "././../../../app/App.styles";
+import { Container } from "././../../../app/App.styles";
+
+import "./register.css";
 
 function Register({ t }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -17,16 +19,18 @@ function Register({ t }) {
 
   return (
     <Container>
-      <H1>{t("Register")}</H1>
-      <Div width={"50vh"}>
-        <P>{t("Register Your Account")}</P>
+      <h1>
+        <b>{t("Register")}</b>
+      </h1>
+      <div>
+        <h2>{t("Register Your Account")}</h2>
         <RegisterForm t={t} />
         <Link to="/login">{t("Already has an account?")}</Link>
-        <Span>
+        <div className={"register-buttons"}>
           <Google t={t} />
           <Facebook t={t} />
-        </Span>
-      </Div>
+        </div>
+      </div>
     </Container>
   );
 }

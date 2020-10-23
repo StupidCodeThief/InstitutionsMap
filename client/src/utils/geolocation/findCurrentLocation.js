@@ -5,7 +5,6 @@ export const findCenter = (mapRef, setCenter, center) => {
 
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition((position) => {
-      console.log(position.coords.latitude, position.coords.longitude);
       setCenter({ ...center, lat: position.coords.latitude, lng: position.coords.longitude });
     });
   } else {

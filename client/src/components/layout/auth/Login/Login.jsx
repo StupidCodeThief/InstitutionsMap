@@ -6,7 +6,7 @@ import LoginForm from "./LoginForm/LoginForm";
 import Facebook from "./Facebook/Facebook";
 import Google from "./Google/Google";
 
-import { Container, H1, P, Div } from "././../../../app/App.styles";
+import { Container } from "././../../../app/App.styles";
 
 function Login({ t }) {
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -17,12 +17,12 @@ function Login({ t }) {
 
   return (
     <Container>
-      <H1>{t("Sign In")}</H1>
-      <Div>
-        <P className="lead">{t("Sign into Your Account")}</P>
+      <h1>{t("Sign In")}</h1>
+      <div>
+        <p className="lead">{t("Sign into Your Account")}</p>
         <LoginForm t={t}/>
         <Google t={t}/> <Facebook t={t}/>
-      </Div>
+      </div>
     </Container>
   );
 }

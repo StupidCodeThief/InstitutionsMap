@@ -1,0 +1,51 @@
+.autocomplete-input {
+  box-sizing: border-box;
+  border: 1px solid transparent;
+  height: 32px;
+  padding: 0 12px;
+  border-radius: 3px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  font-size: 14px;
+  outline: none;
+  text-overflow: ellipsis;
+  position: absolute;
+}
+
+.desktop {
+  right: 15px;
+  top: 70px;
+  margin-left: -120px;
+  width: 340px;
+}
+
+.mobile {
+  top: 50px;
+  left: 2.5%;
+  width: 95%;
+}
+
+.btn-geo {
+  position: absolute;
+  bottom: 265px;
+  right: 10px;
+}
+
+.btn-geo-2 {
+  position: absolute;
+  top: 70px;
+  right: 15px;
+  height: 32px;
+  z-index: 1;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.btn-geo-2-mobile {
+  position: absolute;
+  top: 50px;
+  right: 2.5%;
+  height: 32px;
+  z-index: 1;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
