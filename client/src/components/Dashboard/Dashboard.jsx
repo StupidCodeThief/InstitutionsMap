@@ -18,6 +18,7 @@ function Dashboard({ t, isMobile }) {
     <>
       {places.length && (
         <LeftSideContainer>
+          <h1 className={"visually-hidden"}>{t("Search results")}</h1>
           <h2>{t("Search results")}:</h2>
           {places.length
             ? places.map((place, index) => {

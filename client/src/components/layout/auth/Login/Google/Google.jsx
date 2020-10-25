@@ -1,6 +1,5 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 
 import { Button } from "antd";
 import { GoogleLogin } from "react-google-login";
@@ -9,11 +8,13 @@ import { login } from "../../../../../actions/auth";
 
 import "./Google.styles.css";
 
-function Google({ login, t }) {
+function Google({ t }) {
+  const dispatch = useDispatch();
+
   const responseGoogle = (response) => {
     const token = response.tokenId;
 
-    login({ token: token }, "google");
+    dispatch(login({ token: token }, "google"));
   };
 
   return (
@@ -34,13 +35,4 @@ function Google({ login, t }) {
   );
 }
 
-Google.propTypes = {
-  login: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = {
-  login
-};
-
-export default connect(null, mapDispatchToProps)(Google);
+export default Google;

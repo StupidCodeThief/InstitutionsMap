@@ -42,8 +42,6 @@ function PlaceDetails({ match, t }) {
   const placeWithData = useSelector((state) => state.places.place);
   const comments = useSelector((state) => state.places.comments);
 
-  console.log(placeWithData);
-
   const onToggle = () => {
     setCommentFormOpen(!isCommentFormOpen);
     console.log(isCommentFormOpen);
@@ -62,10 +60,10 @@ function PlaceDetails({ match, t }) {
   const savePlace = () => {
     isVisited ? dispatch(deleteVisitedPlace(match.params.id)) : dispatch(saveVisitedPlace(match.params.id));
   };
-  console.log(placeWithData);
 
   return (
     <Container>
+      <h1 className={"visually-hidden"}>{t("Place`s information")}</h1>
       {placeWithData ? (
         <>
           <PlaceInfo>

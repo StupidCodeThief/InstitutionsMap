@@ -20,6 +20,7 @@ function User({ match, t }) {
 
   return (
     <Container>
+      <h1 className={"visually-hidden"}>{t("User`s information")}</h1>
       <UserInfo user={user} t={t} />
       <UserPlaces user={user} t={t} />
       <span>

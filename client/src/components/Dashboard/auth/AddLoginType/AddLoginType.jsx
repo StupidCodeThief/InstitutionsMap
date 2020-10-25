@@ -13,6 +13,7 @@ function AddLoginType({ t }) {
 
   return (
     <Container>
+      <h1 className={"visually-hidden"}>{t("Add login type")}</h1>
       <AddEmail t={t} />
       {user.googleId ? null : <AddGoogle t={t} />}
       {user.facebookId ? null : <AddFacebook t={t}/>}

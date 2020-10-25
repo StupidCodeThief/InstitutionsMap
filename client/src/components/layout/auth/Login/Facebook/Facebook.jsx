@@ -1,16 +1,17 @@
 import React from "react";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 
 import FacebookLogin from "react-facebook-login";
 
 import { login } from "../../../../../actions/auth";
 
-function Facebook({ login, t }) {
+function Facebook({ t }) {
+  const dispatch = useDispatch();
+
   const responseFacebook = (response) => {
     const { name, email = null, picture, id } = response;
 
-    login({ name: name, email: email, picture: picture, id: id }, "facebook");
+    dispatch(login({ name: name, email: email, picture: picture, id: id }, "facebook"));
   };
 
   return (
@@ -25,13 +26,4 @@ function Facebook({ login, t }) {
   );
 }
 
-Facebook.propTypes = {
-  login: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = {
-  login
-};
-
-export default connect(null, mapDispatchToProps)(Facebook);
+export default Facebook;

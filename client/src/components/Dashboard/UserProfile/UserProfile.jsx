@@ -14,13 +14,10 @@ const { TabPane } = Tabs;
 function UserProfile({ t }) {
   const user = useSelector((state) => state.auth.user);
 
-  function callback(key) {
-    console.log(key);
-  }
-
   return (
     <Container>
-      <Tabs defaultActiveKey="1" onChange={callback} className="tabs">
+      <h1 className={"visually-hidden"}>{t("User`s profile")}</h1>
+      <Tabs defaultActiveKey="1" className="tabs">
         <TabPane tab={t("User info")} key="1">
           <UserInfo user={user} t={t} />
         </TabPane>

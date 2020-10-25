@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { connect } from "react-redux";
-import PropTypes from "prop-types";
+import { useDispatch } from "react-redux";
 
 import { Form, Input, Button } from "antd";
 import { UserOutlined, LockOutlined } from "@ant-design/icons";
@@ -9,8 +8,10 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 import { login } from "../../../../../actions/auth";
 
 function LoginForm({ login, t }) {
+  const dispatch = useDispatch();
+
   const onFinish = (values) => {
-    login(values);
+    dispatch(login(values))
   };
 
   return (
@@ -65,13 +66,4 @@ function LoginForm({ login, t }) {
   );
 }
 
-LoginForm.propTypes = {
-  login: PropTypes.func.isRequired,
-  t: PropTypes.func.isRequired
-};
-
-const mapDispatchToProps = {
-  login
-};
-
-export default connect(null, mapDispatchToProps)(LoginForm);
+export default LoginForm;
