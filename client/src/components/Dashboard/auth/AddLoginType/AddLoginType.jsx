@@ -6,7 +6,7 @@ import AddEmail from "./AddEmail/AddEmail";
 import AddGoogle from "./AddGoogle/AddGoogle";
 import AddFacebook from "./AddFacebook/AddFacebook";
 
-import { Container } from "././../../../app/App.styles";
+import { Container } from "../../../app/App.styles";
 
 function AddLoginType({ t }) {
   const user = useSelector((state) => state.auth.user);

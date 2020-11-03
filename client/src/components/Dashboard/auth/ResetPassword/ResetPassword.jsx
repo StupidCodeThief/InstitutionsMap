@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 
 import { Form, Input, Button } from "antd";
 
-import { Container } from "././../../../app/App.styles";
+import { Container } from "../../../app/App.styles";
 
 import { resetPassword } from "../../../../actions/auth";
 

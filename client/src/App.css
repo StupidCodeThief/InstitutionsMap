@@ -35,6 +35,10 @@ p {
   width: 160px;
 }
 
+.btn-login {
+  width: 210px;
+}
+
 .small-text {
   font-size: 1em;
 }

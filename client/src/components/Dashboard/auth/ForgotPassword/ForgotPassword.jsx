@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 import ForgotPasswordForm from "./ForgotPasswordForm/ForgotPasswordForm";
 
-import { Container } from "././../../../app/App.styles";
+import { Container } from "../../../app/App.styles";
 
 function ForgotPassword({ t }) {
   return (
