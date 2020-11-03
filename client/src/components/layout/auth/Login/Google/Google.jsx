@@ -12,8 +12,6 @@ function Google({ t }) {
   const responseGoogle = (response) => {
     const token = response.tokenId;
 
-    console.log(response);
-
     dispatch(login({ token: token }, "google"));
   };
 
