@@ -12,14 +12,8 @@ function Google({ t }) {
   const responseGoogle = (response) => {
     const token = response.tokenId;
 
-    console.log(response);
-
     dispatch(login({ token: token }, "google"));
   };
-
-  console.log(process.env);
-  console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
-  console.log(window.process);
 
   return (
     <>
