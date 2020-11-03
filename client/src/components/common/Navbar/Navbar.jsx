@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import { Button, Radio } from "antd";
 import { Drawer, List, NavBar, Icon } from "antd-mobile";
 
-import Logout from "../../dashboard/auth/Logout/Logout";
+import Logout from "../../Dashboard/auth/Logout/Logout";
 
 import { DivWithTheme, Header } from "./Navbar.styles";
 

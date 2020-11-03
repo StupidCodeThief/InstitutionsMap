@@ -105,19 +105,17 @@ function PlaceDetails({ match, t }) {
           </h3>
           {comments.length
             ? comments.map((comment) => (
-                <>
-                  <Comment
-                    key={comment.date}
-                    author={<Link to={`/user/${comment.user}`}>{comment.name}</Link>}
-                    avatar={<Avatar src={comment.avatar} alt={comment.name} />}
-                    content={<p>{comment.text}</p>}
-                    datetime={
-                      <Tooltip title={moment(comment.date).format("YYYY-MM-DD HH:mm:ss")}>
-                        <span>{moment(comment.date).fromNow()}</span>
-                      </Tooltip>
-                    }
-                  />
-                </>
+                <Comment
+                  key={comment.date}
+                  author={<Link to={`/user/${comment.user}`}>{comment.name}</Link>}
+                  avatar={<Avatar src={comment.avatar} alt={comment.name} />}
+                  content={<p>{comment.text}</p>}
+                  datetime={
+                    <Tooltip title={moment(comment.date).format("YYYY-MM-DD HH:mm:ss")}>
+                      <span>{moment(comment.date).fromNow()}</span>
+                    </Tooltip>
+                  }
+                />
               ))
             : t("No reviews")}
           {!isCommentFormOpen && (
