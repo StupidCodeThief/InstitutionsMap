@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "description": "Institution map based on google api",
   "main": "server.js",
+  "engines": {
+    "node": "14.2.0"
+  },
   "scripts": {
     "build" : "concurrently \"npm run server\" \"npm run build --prefix client\"",
     "start": "node server.js",

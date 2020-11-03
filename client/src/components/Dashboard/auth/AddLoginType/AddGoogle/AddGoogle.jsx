@@ -6,7 +6,6 @@ import { GoogleLogin } from "react-google-login";
 
 import { addLoginType } from "../../../../../actions/auth";
 
-import "./AddGoogle.styles.css";
 
 function AddGoogle({ t }) {
   const dispatch = useDispatch();
@@ -23,7 +22,7 @@ function AddGoogle({ t }) {
       <GoogleLogin
         clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
         render={(renderProps) => (
-          <Button onClick={renderProps.onClick} className={"ant-btn-primary btn"}>
+          <Button onClick={renderProps.onClick} className={"ant-btn-primary btn btn-login"}>
             {t("Add Google account")}
           </Button>
         )}
