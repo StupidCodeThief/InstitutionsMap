@@ -1,0 +1,4 @@
+.register-buttons {
+  display: flex;
+  flex-wrap: wrap;
+}

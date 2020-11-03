@@ -1,0 +1,54 @@
+#root {
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#map {
+  height: 100%;
+}
+
+h1 {
+  font-size: 3em;
+  font-weight: bold;
+}
+
+p {
+  font-size: 1.2em;
+}
+
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+  clip: rect(0 0 0 0)
+}
+
+.btn {
+  margin-right: 5px;
+  margin-bottom: 5px;
+  margin-top: 5px;
+  width: 160px;
+}
+
+.small-text {
+  font-size: 1em;
+}
+
+::-webkit-scrollbar {
+  /* chrome based */
+  width: 0px; /* ширина scrollbar'a */
+  background: transparent; /* опционально */
+}
+
+.am-navbar {
+  position: absolute;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  right: 0;
+}
