@@ -7,7 +7,7 @@ import { UserOutlined, LockOutlined } from "@ant-design/icons";
 
 import { login } from "../../../../../actions/auth";
 
-function LoginForm({ login, t }) {
+function LoginForm({ t }) {
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
