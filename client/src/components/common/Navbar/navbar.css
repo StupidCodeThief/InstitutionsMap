@@ -1,0 +1,30 @@
+.logo {
+  width: 3em;
+  height: 3em;
+  background-image: url("../../../img/PNG/logo.png");
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.my-drawer .am-drawer-sidebar .am-list {
+  min-height: 100%;
+  width: 300px;
+  padding: 0;
+}
+
+.my-drawer .am-drawer-sidebar .am-list .am-list-body {
+  min-height: 100vh;
+}
+
+.navigation-list {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  list-style: none;
+  margin: 0 auto;
+}
+
+.navigation-item {
+  margin-left: 5px;
+}
