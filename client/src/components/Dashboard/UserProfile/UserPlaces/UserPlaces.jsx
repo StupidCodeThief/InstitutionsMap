@@ -24,8 +24,6 @@ function UserPlaces({ user, t }) {
   useEffect(() => {
     const fetchPlacesData = async () => {
       if (user && user?.visitedPlaces) await dispatch(getPlacesDataArray(user.visitedPlaces, map));
-
-      console.log(placesWithData);
     };
 
     fetchPlacesData();
