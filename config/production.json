@@ -1,0 +1,12 @@
+{
+  "mongoUri": "mongodb+srv://Denis:NotPass2000@spatest-vhqbe.mongodb.net/Institution-map?retryWrites=true&w=majority",
+  "jwtSecret": "HFGfc45nuqwdbU554WDy57g",
+  "jwtSecretExpiresIn": "24h",
+  "githubId": "Iv1.86860ad985ff2055",
+  "githubSecret": "e002d644142931dacff28beba86e42311f38d129",
+  "googleApiKey": "AIzaSyD9l3nX_MxkkEJTVvsie7cJJQ5CFbFqrYI",
+  "OAuthId": "413367035338-ca6o4nk3kfme0f3d9m8eo26mepb1ueum.apps.googleusercontent.com",
+  "OAuthSecret": "oooYJxtep6D1d4wBsW3EfbHu",
+  "email": "aklechenko@mail.ru",
+  "emailPassword": "RenoSandero2015"
+}
