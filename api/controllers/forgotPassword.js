@@ -24,7 +24,7 @@ const passwordRecovery = async (req, res, next) => {
     }
 
     const token = createToken({ user: { id: user.id } }, config.get("jwtSecretExpiresIn"));
-    const setResetUrl = `${req.protocol}://localhost:3000/password/reset?token=${token}`;
+    const setResetUrl = `${req.protocol}://${req.host}/password/reset?token=${token}`;
 
     sendRecoverPasswordLink(email, setResetUrl);
 

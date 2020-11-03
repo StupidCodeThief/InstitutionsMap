@@ -15,6 +15,10 @@ function Google({ t }) {
     dispatch(login({ token: token }, "google"));
   };
 
+  console.log(process.env);
+  console.log(process.env.REACT_APP_GOOGLE_CLIENT_ID);
+  console.log(window.process);
+
   return (
     <>
       <GoogleLogin
