@@ -85,5 +85,7 @@
   "User`s profile": "Профиль пользователя",
   "Place`s information": "Информация о месте",
   "User`s information": "Информация о пользователе",
-  "Something went wrong": "Что-то пошло не так"
+  "Something went wrong": "Что-то пошло не так",
+  "Delete marker": "Удалить маркер",
+  "Clear markers": "Удалить маркеры"
 }

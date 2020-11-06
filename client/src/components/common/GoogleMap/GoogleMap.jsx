@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import { GoogleMap, useLoadScript, Marker, InfoWindow, Autocomplete, StreetViewService } from "@react-google-maps/api";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -36,7 +36,9 @@ function Map({ t, isMobile, language }) {
 
   const dispatch = useDispatch();
 
-  getCenter(setCenter, center);
+  useEffect(() => {
+    getCenter(setCenter, center);
+  }, []);
 
   const onMapClick = useCallback(async (event) => {
     event.stop();
@@ -179,8 +181,17 @@ function Map({ t, isMobile, language }) {
               >
                 {t("Mark as visited")}
               </Button>
-              <Button className={"ant-btn ant-btn-primary"}>
+              <Button className={"ant-btn ant-btn-primary btn"}>
                 <Link to={`/place-info/${selected.place_id}`}>{t("View details")}</Link>
+              </Button>
+              <Button
+                className={"btn"}
+                onClick={() => {
+                  deleteMarker(markers.findIndex((marker) => marker.time === selected.time));
+                  setSelected(null);
+                }}
+              >
+                {t("Delete marker")}
               </Button>
             </>
           ) : (
@@ -189,12 +200,23 @@ function Map({ t, isMobile, language }) {
               <p>
                 Position: lat: {selected.lat}, lng: {selected.lng}
               </p>
+              <Button
+                className={"btn"}
+                onClick={() => {
+                  deleteMarker(markers.findIndex((marker) => marker.time === selected.time));
+                  setSelected(null);
+                }}
+              >
+                {t("Delete marker")}
+              </Button>
             </>
           )}
         </div>
       </InfoWindow>
     );
   };
+
+  console.log("render");
 
   return !isLoaded ? (
     <PreLoading />
@@ -227,6 +249,7 @@ function Map({ t, isMobile, language }) {
               <SearchOutlined />
               {t("Find!")}
             </Button>
+            <Button>{t("Clear markers")}</Button>
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
               <Input
                 onChange={onChange}
