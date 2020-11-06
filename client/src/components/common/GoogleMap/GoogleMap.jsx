@@ -12,7 +12,7 @@ import { findCenter, getCenter } from "../../../utils/geolocation/findCurrentLoc
 import { findPlaces } from "../../../utils/search/findPlaces";
 import { saveVisitedPlace, deleteVisitedPlace } from "../../../actions/places";
 
-import Spinner from "../Spinner/Spinner";
+import PreLoading from "../PreLoading/PreLoading";
 
 import { Input } from "./GoogleMap.styles";
 import "./googleMap.css";
@@ -125,12 +125,6 @@ function Map({ t, isMobile, language }) {
     dispatch({ type: MAP_ERROR });
     return <></>;
   }
-  if (!isLoaded)
-    return (
-      <>
-        <Spinner />
-      </>
-    );
 
   const google = window.google;
   const options = {
@@ -198,7 +192,9 @@ function Map({ t, isMobile, language }) {
     );
   };
 
-  return (
+  return !isLoaded ? (
+    <PreLoading />
+  ) : (
     <div id="map">
       <GoogleMap
         mapContainerStyle={mapContainerStyle}
