@@ -236,7 +236,7 @@ function Map({ t, isMobile, language }) {
               onClick={() => {
                 findCenter(mapRef, setCenter, center);
               }}
-              className={"btn-geo ant-btn ant-btn-default"}
+              className={"btn-geo-1 ant-btn ant-btn-default"}
               icon={<EnvironmentOutlined />}
               size={"large"}
             ></Button>
@@ -244,12 +244,17 @@ function Map({ t, isMobile, language }) {
               onClick={() => {
                 placeFinder(userInput);
               }}
-              className={isMobile ? "btn-geo-2-mobile ant-btn ant-btn-primary" : "btn-geo-2 ant-btn ant-btn-primary"}
+              className={`btn-geo ${
+                isMobile ? "btn-geo-2-mobile ant-btn ant-btn-primary" : "btn-geo-2 ant-btn ant-btn-primary"
+              }`}
             >
               <SearchOutlined />
               {t("Find!")}
             </Button>
-            <Button className={isMobile ? "clear-markers-mobile" : "clear-markers"} onClick={() => setMarkers([])}>
+            <Button
+              className={`btn-geo ${isMobile ? "clear-markers-mobile" : "clear-markers"}`}
+              onClick={() => setMarkers([])}
+            >
               {t("Clear markers")}
             </Button>
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
