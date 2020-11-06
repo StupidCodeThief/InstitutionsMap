@@ -127,18 +127,22 @@ function Map({ t, isMobile, language }) {
   }
 
   const google = window.google;
-  const options = {
-    zoomControlOptions: {
-      position: google.maps.ControlPosition.RIGHT_BOTTOM
-    },
-    mapTypeControlOptions: {
-      position: google.maps.ControlPosition.BOTTOM_CENTER
-    },
-    fullscreenControlOptions: {
-      position: google.maps.ControlPosition.RIGHT_BOTTOM
-    },
-    streetViewControl: isAuthenticated
-  };
+  let options = {};
+
+  if (google) {
+    options = {
+      zoomControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_BOTTOM
+      },
+      mapTypeControlOptions: {
+        position: google.maps.ControlPosition.BOTTOM_CENTER
+      },
+      fullscreenControlOptions: {
+        position: google.maps.ControlPosition.RIGHT_BOTTOM
+      },
+      streetViewControl: isAuthenticated
+    };
+  }
 
   const deleteMarker = (markersIndex) => {
     setMarkers(markers.filter((marker, index) => index !== markersIndex)); // delete marker from state
