@@ -249,7 +249,9 @@ function Map({ t, isMobile, language }) {
               <SearchOutlined />
               {t("Find!")}
             </Button>
-            <Button>{t("Clear markers")}</Button>
+            <Button className={isMobile ? "clear-markers-mobile" : "clear-markers"} onClick={() => setMarkers([])}>
+              {t("Clear markers")}
+            </Button>
             <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
               <Input
                 onChange={onChange}

@@ -49,3 +49,23 @@
   border: 1px solid transparent;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
+
+.clear-markers {
+  position: absolute;
+  top: 70px;
+  right: 360px;
+  height: 32px;
+  z-index: 1;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.clear-markers-mobile {
+  position: absolute;
+  top: 87px;
+  right: 2.5%;
+  height: 32px;
+  z-index: 1;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
