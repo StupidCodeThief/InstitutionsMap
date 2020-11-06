@@ -24,28 +24,39 @@
   width: 95%;
 }
 
-.btn-geo {
+.btn-geo-1 {
   position: absolute;
   bottom: 265px;
   right: 10px;
+}
+
+.btn-geo {
+  height: 32px;
+  z-index: 1;
+  border: 1px solid transparent;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .btn-geo-2 {
   position: absolute;
   top: 70px;
   right: 15px;
-  height: 32px;
-  z-index: 1;
-  border: 1px solid transparent;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
 }
 
 .btn-geo-2-mobile {
   position: absolute;
   top: 50px;
   right: 2.5%;
-  height: 32px;
-  z-index: 1;
-  border: 1px solid transparent;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+}
+
+.clear-markers {
+  position: absolute;
+  top: 70px;
+  right: 360px;
+}
+
+.clear-markers-mobile {
+  position: absolute;
+  top: 87px;
+  right: 2.5%;
 }
